@@ -1,914 +1,1456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Themba &amp; Lisa — Engagement Invitation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Great+Vibes&display=swap" rel="stylesheet" />
-
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Themba & Lisa — Umshado Lento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Great+Vibes&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
+    /* ── TOKENS ── */
     :root {
-      --cream: #f7f3ea;
-      --cream-light: #faf8f3;
-      --gold: #b5a48a;
-      --gold-light: #d4c9b0;
-      --gold-dark: #8a7d68;
-      --ink: #1a1a1a;
-    }
+      --espresso:  #2C1810;
+      --cognac:    #7A3B1E;
+      --gold:      #C9924A;
+      --gold-light:#E2B87A;
+      --sand:      #E8D5B0;
+      --ivory:     #FAF3E8;
+      --blush:     #C17B50;
+      --ink:       #1C0F08;
+      --muted:     #8C6A50;
+      --white:     #FFFDF8;
 
-    html { font-size: 16px; -webkit-text-size-adjust: 100%; touch-action: manipulation; }
+      --serif-display: 'Cormorant Garamond', Georgia, serif;
+      --serif-body:    'EB Garamond', Georgia, serif;
+      --script:        'Great Vibes', cursive;
+    }
 
     body {
-      background: var(--cream);
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--ivory);
       color: var(--ink);
-      min-height: 100vh;
+      font-family: var(--serif-body);
       overflow-x: hidden;
       width: 100%;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ── BALLOON LAYER ── */
-    #balloons-layer {
+    /* ════════════════════════════════
+       ENVELOPE / WAX SEAL SCREEN
+    ════════════════════════════════ */
+    #envelope-screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      z-index: 10;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .balloon {
+    /* Cowhide SVG background */
+    #envelope-screen::before {
+      content: '';
       position: absolute;
-      bottom: -140px;
-      will-change: transform, opacity;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      -webkit-animation-name: floatUp;
-      animation-name: floatUp;
-      -webkit-animation-timing-function: linear;
-      animation-timing-function: linear;
-      -webkit-animation-fill-mode: forwards;
-      animation-fill-mode: forwards;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60px 40px at 15% 20%, #5C3317 0%, transparent 100%),
+        radial-gradient(ellipse 90px 60px at 70% 15%, #3E1F0A 0%, transparent 100%),
+        radial-gradient(ellipse 50px 70px at 85% 50%, #5C3317 0%, transparent 100%),
+        radial-gradient(ellipse 80px 45px at 30% 70%, #3E1F0A 0%, transparent 100%),
+        radial-gradient(ellipse 100px 55px at 60% 80%, #5C3317 0%, transparent 100%),
+        radial-gradient(ellipse 40px 35px at 10% 90%, #3E1F0A 0%, transparent 100%),
+        radial-gradient(ellipse 70px 40px at 50% 45%, #4A2610 0%, transparent 100%),
+        radial-gradient(ellipse 55px 30px at 90% 30%, #5C3317 0%, transparent 100%),
+        radial-gradient(ellipse 45px 60px at 20% 50%, #3E1F0A 0%, transparent 100%);
+      background-color: #C49A6C;
+      filter: blur(1px);
     }
 
-    @keyframes floatUp {
-      0%   { -webkit-transform: translateY(0) rotate(0deg); transform: translateY(0) rotate(0deg); opacity: 1; }
-      75%  { opacity: 1; }
-      100% { -webkit-transform: translateY(-115vh) rotate(var(--sway,15deg)); transform: translateY(-115vh) rotate(var(--sway,15deg)); opacity: 0; }
+    /* envelope flap lines */
+    .envelope-body {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
     }
 
-    @-webkit-keyframes floatUp {
-      0%   { -webkit-transform: translateY(0) rotate(0deg); opacity: 1; }
-      75%  { opacity: 1; }
-      100% { -webkit-transform: translateY(-115vh) rotate(var(--sway,15deg)); opacity: 0; }
+    .envelope-body svg {
+      width: 100%;
+      height: 100%;
     }
 
-    /* ── PAGE ── */
-    .page {
-      min-height: 100vh;
+    .seal-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(0.6rem, 2vw, 1.1rem);
+    }
+
+    /* ── DANCING COUPLE on envelope ── */
+    .dancers-wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: clamp(8px, 4vw, 28px);
+      margin-bottom: 0.2rem;
+    }
+
+    .env-dancer {
+      transform-origin: 50% 100%;
+      filter: drop-shadow(0 4px 12px rgba(44,24,16,0.4));
+    }
+
+    /* Groom rocks side to side */
+    .env-dancer--groom {
+      animation: groomDance 0.7s ease-in-out infinite alternate;
+    }
+
+    /* Bride sways the opposite way, slightly different timing */
+    .env-dancer--bride {
+      animation: brideDance 0.7s ease-in-out infinite alternate 0.18s;
+    }
+
+    @keyframes groomDance {
+      0%   { transform: rotate(-14deg) translateY(0px); }
+      30%  { transform: rotate(2deg)   translateY(-6px); }
+      60%  { transform: rotate(10deg)  translateY(-2px); }
+      100% { transform: rotate(-6deg)  translateY(-8px); }
+    }
+
+    @keyframes brideDance {
+      0%   { transform: rotate(12deg)  translateY(-4px); }
+      30%  { transform: rotate(-4deg)  translateY(-8px); }
+      60%  { transform: rotate(-12deg) translateY(-2px); }
+      100% { transform: rotate(6deg)   translateY(-6px); }
+    }
+
+    /* ── TAP PROMPT ── */
+    .tap-prompt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tap-hand {
+      animation: tapBounce 1.1s ease-in-out infinite;
+      filter: drop-shadow(0 2px 6px rgba(44,24,16,0.35));
+    }
+
+    @keyframes tapBounce {
+      0%, 100% { transform: translateY(0px) scale(1);    opacity: 0.85; }
+      40%       { transform: translateY(-7px) scale(1.08); opacity: 1;    }
+      70%       { transform: translateY(2px)  scale(0.96); opacity: 0.9;  }
+    }
+
+    /* Wax seal */
+    .wax-seal {
+      width: clamp(120px, 30vw, 180px);
+      height: clamp(120px, 30vw, 180px);
+      animation: sealPulse 2.2s ease-in-out infinite;
+      filter: drop-shadow(0 8px 24px rgba(44,24,16,0.5));
+      transition: transform 0.2s ease;
+    }
+
+    .wax-seal:active { transform: scale(0.94); }
+
+    @keyframes sealPulse {
+      0%, 100% { filter: drop-shadow(0 8px 24px rgba(44,24,16,0.5)); }
+      50%       { filter: drop-shadow(0 12px 36px rgba(201,146,74,0.6)); }
+    }
+
+    .seal-label {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(13px, 3.5vw, 17px);
+      color: var(--ivory);
+      letter-spacing: 0.08em;
+      text-shadow: 0 1px 4px rgba(44,24,16,0.6);
+      text-align: center;
+      animation: breathe 2.2s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 0.75; }
+      50%       { opacity: 1; }
+    }
+
+    /* Envelope slide-up exit */
+    .envelope-screen--opening {
+      animation: envelopeOpen 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes envelopeOpen {
+      0%   { transform: translateY(0); opacity: 1; }
+      60%  { transform: translateY(-8px); opacity: 1; }
+      100% { transform: translateY(-105vh); opacity: 0; }
+    }
+
+    /* ════════════════════════════════
+       MAIN INVITATION
+    ════════════════════════════════ */
+    #invitation {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.7s ease 0.3s;
+    }
+
+    #invitation.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    /* sticky nav */
+    .inv-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--espresso);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .inv-nav-name {
+      font-family: var(--script);
+      font-size: clamp(20px, 5vw, 26px);
+      color: var(--gold-light);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SECTION BASE ── */
+    .section {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 7vw, 5rem) clamp(1.2rem, 5vw, 3rem);
+    }
+
+    /* ════════════════════════════════
+       HERO SECTION
+    ════════════════════════════════ */
+    .hero {
+      min-height: 100svh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(1rem, 4vw, 3rem) clamp(0.75rem, 4vw, 2rem);
-    }
-
-    /* ── CARD ── */
-    .card {
-      background: var(--cream-light);
-      border: 1px solid var(--gold-light);
-      width: 100%;
-      max-width: 520px;
-      padding: clamp(2rem, 6vw, 3.5rem) clamp(1.5rem, 6vw, 3rem);
-      text-align: center;
       position: relative;
-      -webkit-animation: fadeUp 0.9s ease both;
-      animation: fadeUp 0.9s ease both;
+      overflow: hidden;
+      background: var(--espresso);
     }
 
-    .card::before {
+    /* cowhide texture overlay */
+    .hero::before {
       content: '';
       position: absolute;
-      top: 10px; left: 10px; right: 10px; bottom: 10px;
-      border: 0.5px solid var(--gold-light);
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80px 55px at 8%  12%, rgba(122,59,30,0.55) 0%, transparent 100%),
+        radial-gradient(ellipse 110px 70px at 75% 8%,  rgba(60,28,10,0.5)  0%, transparent 100%),
+        radial-gradient(ellipse 65px 85px at 92% 45%, rgba(122,59,30,0.5)  0%, transparent 100%),
+        radial-gradient(ellipse 95px 55px at 25% 72%, rgba(60,28,10,0.5)   0%, transparent 100%),
+        radial-gradient(ellipse 120px 65px at 65% 85%, rgba(122,59,30,0.5) 0%, transparent 100%),
+        radial-gradient(ellipse 50px 40px at 12% 95%, rgba(60,28,10,0.45)  0%, transparent 100%),
+        radial-gradient(ellipse 85px 50px at 48% 48%, rgba(90,42,16,0.4)   0%, transparent 100%);
+      opacity: 0.7;
       pointer-events: none;
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; -webkit-transform: translateY(28px); transform: translateY(28px); }
-      to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+    /* diagonal gold line */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: clamp(40px,12vw,120px);
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+      opacity: 0.3;
+      pointer-events: none;
     }
 
-    @-webkit-keyframes fadeUp {
-      from { opacity: 0; -webkit-transform: translateY(28px); }
-      to   { opacity: 1; -webkit-transform: translateY(0); }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(2rem, 6vw, 4rem) clamp(1.2rem, 5vw, 3rem);
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
     }
 
-    .corner { position: absolute; width: clamp(22px,5vw,34px); height: clamp(22px,5vw,34px); }
-    .corner--tl { top:6px; left:6px; border-top:1px solid var(--gold); border-left:1px solid var(--gold); }
-    .corner--tr { top:6px; right:6px; border-top:1px solid var(--gold); border-right:1px solid var(--gold); }
-    .corner--bl { bottom:6px; left:6px; border-bottom:1px solid var(--gold); border-left:1px solid var(--gold); }
-    .corner--br { bottom:6px; right:6px; border-bottom:1px solid var(--gold); border-right:1px solid var(--gold); }
-
-    .cordially {
-      font-size: clamp(10px,2.2vw,12px);
-      letter-spacing: 0.16em;
-      color: var(--gold-dark);
-      text-transform: uppercase;
+    .hero-eyebrow {
+      font-family: var(--serif-display);
       font-style: italic;
-      margin-bottom: clamp(1rem,3vw,1.6rem);
-      line-height: 1.7;
+      font-size: clamp(11px, 2.5vw, 14px);
+      letter-spacing: 0.22em;
+      color: var(--gold-light);
+      margin-bottom: clamp(1.2rem, 4vw, 2rem);
+      opacity: 0.9;
     }
 
-    .name {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(48px,12vw,68px);
-      color: var(--ink);
-      line-height: 1.05;
+    .hero-names {
+      font-family: var(--script);
+      font-size: clamp(52px, 14vw, 88px);
+      color: var(--ivory);
+      line-height: 0.95;
       display: block;
+      text-shadow: 0 2px 12px rgba(44,24,16,0.4);
     }
 
-    .ampersand {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(32px,8vw,48px);
-      color: var(--gold-dark);
+    .hero-ampersand {
+      font-family: var(--script);
+      font-size: clamp(36px, 9vw, 56px);
+      color: var(--gold);
       display: block;
-      line-height: 1;
+      line-height: 1.1;
       margin: 0.1rem 0;
     }
 
-    .divider { display:flex; align-items:center; gap:10px; margin:clamp(1.2rem,4vw,2rem) 0; }
-    .divider-line { flex:1; height:0.5px; background:var(--gold-light); }
-    .divider-ornament { font-size:clamp(11px,3vw,15px); color:var(--gold); letter-spacing:4px; }
-
-    .details { display:grid; gap:clamp(0.9rem,2.5vw,1.3rem); margin-bottom:clamp(1.2rem,4vw,2rem); }
-
-    .detail-label {
-      font-size: clamp(9px,1.8vw,10px);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold-dark);
-      margin-bottom: 0.2rem;
-    }
-
-    .detail-value {
-      font-size: clamp(15px,3.8vw,18px);
-      color: var(--ink);
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.5;
-    }
-
-    .theme-band {
-      background: var(--ink);
-      padding: clamp(0.7rem,2.5vw,1rem) clamp(1rem,4vw,1.5rem);
-      margin-bottom: clamp(1.4rem,4vw,2rem);
-    }
-    .theme-label { font-size:clamp(8px,1.8vw,10px); letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:0.2rem; }
-    .theme-value { font-size:clamp(14px,3.5vw,17px); font-style:italic; color:var(--cream-light); letter-spacing:0.05em; }
-
-    .rsvp-btn {
-      display: inline-block;
-      padding: clamp(0.7rem,2.5vw,0.9rem) clamp(2rem,8vw,3.2rem);
-      background: transparent;
-      border: 1px solid var(--ink);
-      color: var(--ink);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(11px,2.5vw,13px);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      cursor: pointer;
-      -webkit-transition: background 0.3s, color 0.3s;
-      transition: background 0.3s, color 0.3s;
-      -webkit-animation: fadeUp 0.9s ease 0.6s both;
-      animation: fadeUp 0.9s ease 0.6s both;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      min-height: 44px;
-      min-width: 120px;
-      position: relative;
-      z-index: 20;
-    }
-    .rsvp-btn:hover, .rsvp-btn:active, .rsvp-btn:focus {
-      background:var(--ink); color:var(--cream-light); outline:none;
-    }
-
-    /* ── OVERLAY ── */
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(20,18,14,0.75);
-      z-index: 300;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-    }
-    .overlay.active { display: block; }
-
-    .overlay-inner {
-      min-height: 100%;
+    .hero-divider {
       display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: clamp(0.75rem,3vw,2rem) clamp(0.75rem,4vw,1.5rem);
+      align-items: center;
+      gap: 12px;
+      margin: clamp(1.5rem, 4vw, 2.5rem) 0;
     }
 
-    /* ── MODAL ── */
-    .modal {
-      background: var(--cream-light);
-      border: 1px solid var(--gold-light);
-      width: 100%;
-      max-width: 400px;
-      padding: clamp(2.2rem,6vw,2.8rem) clamp(1.2rem,5vw,2.2rem) clamp(1.8rem,5vw,2.4rem);
+    .hero-divider-line {
+      flex: 1;
+      height: 0.5px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    .hero-divider-diamond {
+      width: 7px; height: 7px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .hero-details {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.6rem, 2vw, 1rem);
+    }
+
+    .hero-detail-label {
+      font-family: var(--serif-display);
+      font-size: clamp(9px, 2vw, 11px);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.15rem;
+    }
+
+    .hero-detail-value {
+      font-family: var(--serif-display);
+      font-size: clamp(15px, 3.8vw, 20px);
+      color: var(--ivory);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    .hero-tagline {
+      margin-top: clamp(1.5rem, 4vw, 2.5rem);
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(13px, 3vw, 16px);
+      color: var(--gold-light);
+      letter-spacing: 0.06em;
+      line-height: 1.7;
+    }
+
+    .hero-tagline span {
+      display: block;
+      font-size: clamp(10px, 2.2vw, 12px);
+      letter-spacing: 0.18em;
+      color: var(--sand);
+      margin-top: 0.3rem;
+      font-style: normal;
+    }
+
+    /* ════════════════════════════════
+       FAMILIES SECTION
+    ════════════════════════════════ */
+    .families-section {
+      background: var(--sand);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.2rem, 5vw, 3rem);
+    }
+
+    .families-inner {
+      max-width: 640px;
+      margin: 0 auto;
       text-align: center;
-      position: relative;
-      -webkit-animation: fadeUp 0.35s ease both;
-      animation: fadeUp 0.35s ease both;
-      margin: auto 0;
     }
 
-    .modal::before {
-      content: '';
-      position: absolute;
-      top: 8px; left: 8px; right: 8px; bottom: 8px;
-      border: 0.5px solid var(--gold-light);
-      pointer-events: none;
+    .section-eyebrow {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(11px, 2.5vw, 13px);
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: clamp(1.8rem, 4vw, 3rem);
     }
 
-    .close-btn {
-      position: absolute;
-      top: clamp(10px,2.5vw,14px);
-      right: clamp(10px,2.5vw,14px);
-      background: none;
-      border: none;
-      font-size: clamp(20px,5vw,24px);
-      color: var(--gold-dark);
-      cursor: pointer;
-      line-height: 1;
-      z-index: 2;
-      width: 40px;
-      height: 40px;
+    .families-split {
       display: flex;
       align-items: center;
       justify-content: center;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      min-height: 40px;
+      gap: clamp(1rem, 4vw, 3rem);
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
     }
 
-    .modal-title {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(40px,10vw,50px);
-      color: var(--ink);
-      margin-bottom: 0.2rem;
+    .family-block { text-align: center; flex: 1; }
+
+    .family-surname {
+      font-family: var(--serif-display);
+      font-size: clamp(18px, 5vw, 30px);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--espresso);
+      text-transform: uppercase;
+    }
+
+    .family-house {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(12px, 2.8vw, 15px);
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .families-diamond {
+      width: 10px; height: 10px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .families-invite-text {
+      font-family: var(--serif-display);
+      font-size: clamp(13px, 3vw, 17px);
+      color: var(--espresso);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .families-names-script {
+      font-family: var(--script);
+      font-size: clamp(34px, 9vw, 54px);
+      color: var(--cognac);
+      display: block;
+      margin: 0.6rem 0;
+    }
+
+    .families-event-detail {
+      font-family: var(--serif-display);
+      font-size: clamp(12px, 2.8vw, 15px);
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-top: clamp(1rem, 2.5vw, 1.5rem);
+      font-style: italic;
+    }
+
+    /* ════════════════════════════════
+       STORY SECTION
+    ════════════════════════════════ */
+    .story-section {
+      background: var(--ivory);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.2rem, 5vw, 3rem);
+    }
+
+    .story-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .story-heading {
+      font-family: var(--serif-display);
+      font-size: clamp(22px, 5.5vw, 34px);
+      font-weight: 300;
+      color: var(--espresso);
+      margin-bottom: 0.3rem;
+      text-align: center;
+    }
+
+    .story-sub {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(12px, 2.8vw, 15px);
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 0.06em;
+    }
+
+    .story-card {
+      background: var(--white);
+      border-left: 2.5px solid var(--gold);
+      padding: clamp(1.4rem, 4vw, 2.2rem) clamp(1.4rem, 4vw, 2rem);
+      margin-bottom: clamp(1.2rem, 3.5vw, 2rem);
+      position: relative;
+    }
+
+    .story-card-label {
+      font-family: var(--serif-display);
+      font-size: clamp(14px, 3.2vw, 18px);
+      font-weight: 500;
+      color: var(--cognac);
+      margin-bottom: 0.15rem;
+    }
+
+    .story-card-sub {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(11px, 2.5vw, 13px);
+      color: var(--gold);
+      margin-bottom: clamp(0.8rem, 2vw, 1.1rem);
+      display: block;
+    }
+
+    .story-text {
+      font-size: clamp(14.5px, 3.2vw, 16.5px);
+      line-height: 1.85;
+      color: #3C2010;
+      font-family: var(--serif-body);
+    }
+
+    .story-quote {
+      font-family: var(--script);
+      font-size: clamp(28px, 7vw, 40px);
+      color: var(--gold);
+      text-align: center;
+      margin: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(0.5rem, 2vw, 1rem);
+      display: block;
+      line-height: 1.2;
+    }
+
+    /* ════════════════════════════════
+       VENUE SECTION
+    ════════════════════════════════ */
+    .venue-section {
+      background: var(--espresso);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.2rem, 5vw, 3rem);
+    }
+
+    .venue-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .venue-photo {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      margin-bottom: clamp(1.8rem, 4vw, 2.8rem);
+      border: 1px solid rgba(201,146,74,0.3);
+      /* placeholder gradient resembling a warm venue */
+      background: linear-gradient(135deg,
+        #4A2610 0%, #7A3B1E 25%, #C9924A 50%, #7A3B1E 75%, #2C1810 100%);
+    }
+
+    .venue-eyebrow {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(10px, 2.2vw, 12px);
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .venue-name {
+      font-family: var(--serif-display);
+      font-size: clamp(26px, 7vw, 44px);
+      font-weight: 300;
+      color: var(--ivory);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .venue-address {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(13px, 3vw, 16px);
+      color: var(--sand);
+      line-height: 1.6;
+      margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+      letter-spacing: 0.04em;
+    }
+
+    .venue-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(201,146,74,0.2);
+      margin-bottom: clamp(1.8rem, 4vw, 2.8rem);
+      border: 1px solid rgba(201,146,74,0.2);
+    }
+
+    .venue-detail-cell {
+      background: rgba(44,24,16,0.8);
+      padding: clamp(0.9rem, 2.5vw, 1.3rem) clamp(0.8rem, 2.5vw, 1.2rem);
+      text-align: center;
+    }
+
+    .venue-detail-label {
+      font-size: clamp(8px, 1.8vw, 10px);
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-family: var(--serif-display);
+      margin-bottom: 0.3rem;
+    }
+
+    .venue-detail-value {
+      font-family: var(--serif-display);
+      font-size: clamp(14px, 3.5vw, 18px);
+      color: var(--ivory);
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: clamp(0.8rem, 2.5vw, 1rem) clamp(2rem, 6vw, 3rem);
+      background: var(--gold);
+      border: none;
+      color: var(--espresso);
+      font-family: var(--serif-display);
+      font-size: clamp(12px, 2.8vw, 14px);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.25s;
+      min-height: 48px;
+    }
+
+    .map-btn:hover { background: var(--gold-light); }
+    .map-btn:active { background: var(--gold-light); }
+
+    /* ════════════════════════════════
+       PROGRAMME SECTION
+    ════════════════════════════════ */
+    .prog-section {
+      background: var(--sand);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.2rem, 5vw, 3rem);
+    }
+
+    .prog-inner {
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .prog-heading {
+      font-family: var(--serif-display);
+      font-size: clamp(22px, 5.5vw, 34px);
+      font-weight: 300;
+      color: var(--espresso);
+      margin-bottom: clamp(2rem, 5vw, 3rem);
+    }
+
+    .prog-list {
+      list-style: none;
+      border-top: 0.5px solid var(--gold);
+    }
+
+    .prog-item {
+      display: flex;
+      align-items: baseline;
+      gap: clamp(0.8rem, 3vw, 1.5rem);
+      padding: clamp(0.8rem, 2.5vw, 1.1rem) 0;
+      border-bottom: 0.5px solid rgba(201,146,74,0.3);
+      text-align: left;
+    }
+
+    .prog-time {
+      font-family: var(--serif-display);
+      font-size: clamp(12px, 2.8vw, 14px);
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      min-width: clamp(52px, 14vw, 70px);
+      flex-shrink: 0;
+      font-style: italic;
+    }
+
+    .prog-event {
+      font-family: var(--serif-display);
+      font-size: clamp(14px, 3.2vw, 17px);
+      color: var(--espresso);
+      line-height: 1.4;
+    }
+
+    .prog-event-sub {
+      display: block;
+      font-size: clamp(11px, 2.5vw, 13px);
+      font-style: italic;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ════════════════════════════════
+       DRESS CODE SECTION
+    ════════════════════════════════ */
+    .dress-section {
+      background: var(--cognac);
+      padding: clamp(2.5rem, 6vw, 4rem) clamp(1.2rem, 5vw, 3rem);
+      text-align: center;
+    }
+
+    .dress-eyebrow {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(10px, 2.2vw, 12px);
+      letter-spacing: 0.25em;
+      color: var(--gold-light);
+      margin-bottom: 0.6rem;
+    }
+
+    .dress-theme {
+      font-family: var(--serif-display);
+      font-size: clamp(24px, 6vw, 38px);
+      font-weight: 300;
+      color: var(--ivory);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .dress-sub {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(13px, 3vw, 16px);
+      color: var(--sand);
+      line-height: 1.7;
+    }
+
+    .dress-swatches {
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.5rem, 2vw, 1rem);
+      margin-top: clamp(1.2rem, 3vw, 2rem);
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: clamp(40px, 10vw, 56px);
+      height: clamp(40px, 10vw, 56px);
+      border-radius: 50%;
+      border: 2px solid rgba(250,243,232,0.3);
+      flex-shrink: 0;
+    }
+
+    /* ════════════════════════════════
+       RSVP SECTION
+    ════════════════════════════════ */
+    .rsvp-section {
+      background: var(--ivory);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1.2rem, 5vw, 3rem);
+    }
+
+    .rsvp-inner {
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .rsvp-script {
+      font-family: var(--script);
+      font-size: clamp(40px, 10vw, 62px);
+      color: var(--cognac);
+      display: block;
+      margin-bottom: 0.3rem;
       line-height: 1.1;
     }
 
-    .modal-sub {
+    .rsvp-sub {
+      font-family: var(--serif-display);
       font-style: italic;
-      font-size: clamp(11px,2.8vw,13px);
-      letter-spacing: 0.1em;
-      color: var(--gold-dark);
-      text-transform: uppercase;
-      margin-bottom: clamp(1.2rem,4vw,1.8rem);
-      line-height: 1.5;
+      font-size: clamp(13px, 3vw, 16px);
+      color: var(--muted);
+      margin-bottom: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1.7;
     }
 
-    .form-group { margin-bottom: clamp(0.9rem,3vw,1.2rem); text-align: left; }
+    .rsvp-deadline {
+      font-family: var(--serif-display);
+      font-size: clamp(12px, 2.8vw, 14px);
+      color: var(--espresso);
+      letter-spacing: 0.08em;
+      margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+      font-style: italic;
+    }
 
-    .form-group label {
-      display: block;
-      font-size: clamp(10px,2.2vw,11px);
-      letter-spacing: 0.18em;
+    .rsvp-btn-main {
+      display: inline-block;
+      padding: clamp(0.9rem, 3vw, 1.1rem) clamp(2.5rem, 8vw, 4rem);
+      background: var(--espresso);
+      color: var(--gold-light);
+      font-family: var(--serif-display);
+      font-size: clamp(12px, 3vw, 15px);
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold-dark);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.25s;
+      border: 1px solid var(--cognac);
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+
+    .rsvp-btn-main:hover  { background: var(--cognac); }
+    .rsvp-btn-main:active { background: var(--cognac); }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    .footer {
+      background: var(--espresso);
+      padding: clamp(2rem, 5vw, 3.5rem) clamp(1.2rem, 5vw, 3rem);
+      text-align: center;
+    }
+
+    .footer-names {
+      font-family: var(--script);
+      font-size: clamp(32px, 8vw, 50px);
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-date {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(13px, 3vw, 16px);
+      color: var(--sand);
+      margin-bottom: clamp(1rem, 3vw, 1.8rem);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-divider {
+      width: clamp(60px, 20vw, 100px);
+      height: 0.5px;
+      background: var(--gold);
+      margin: 0 auto clamp(1rem, 3vw, 1.5rem);
+      opacity: 0.4;
+    }
+
+    .footer-zulu {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-size: clamp(13px, 3vw, 16px);
+      color: var(--gold-light);
+      letter-spacing: 0.08em;
       margin-bottom: 0.4rem;
     }
 
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: clamp(0.65rem,2.5vw,0.8rem) clamp(0.75rem,2.5vw,1rem);
-      background: var(--cream);
-      border: 0.5px solid var(--gold-light);
-      border-radius: 0;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(15px,4vw,16px);
+    .footer-translation {
+      font-family: var(--serif-display);
       font-style: italic;
-      color: var(--ink);
-      outline: none;
-      -webkit-transition: border-color 0.2s;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-      appearance: none;
-      min-height: 46px;
-      font-size: 16px;
+      font-size: clamp(11px, 2.5vw, 13px);
+      color: rgba(232,213,176,0.5);
+      letter-spacing: 0.1em;
     }
 
-    .form-group textarea { resize: vertical; min-height: clamp(78px,20vw,95px); }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--gold-dark); }
-    .form-group input.error { border-color: #a0402a; }
-
-    .submit-btn {
-      width: 100%;
-      padding: clamp(0.8rem,2.8vw,0.95rem);
-      min-height: 50px;
-      background: var(--ink);
-      border: none;
-      color: var(--cream-light);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(12px,2.8vw,14px);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      -webkit-transition: background 0.2s;
-      transition: background 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      position: relative;
-      z-index: 20;
-    }
-    .submit-btn:hover, .submit-btn:active { background: #333; }
-
-    /* ── THANK YOU ── */
-    .thank-you { display: none; padding: 0.3rem 0 0.5rem; }
-
-    /* ── DANCE STAGE ── */
-    #dance-stage {
-      display: none;
-      width: 130px;
-      height: 90px;
-      margin: 0.6rem auto 0.8rem;
-      position: relative;
+    /* ════════════════════════════════
+       SECTION HEADINGS SHARED
+    ════════════════════════════════ */
+    .section-title {
+      font-family: var(--serif-display);
+      font-size: clamp(22px, 5.5vw, 34px);
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 0.3rem;
     }
 
-    .dancer {
-      position: absolute;
-      bottom: 0;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-
-    .dancer-a {
-      left: 8px;
-      -webkit-animation: danceA 0.48s ease-in-out infinite alternate;
-      animation: danceA 0.48s ease-in-out infinite alternate;
-      -webkit-transform-origin: 50% 100%;
-      transform-origin: 50% 100%;
-    }
-
-    .dancer-b {
-      right: 8px;
-      -webkit-animation: danceB 0.48s ease-in-out infinite alternate;
-      animation: danceB 0.48s ease-in-out infinite alternate;
-      -webkit-transform-origin: 50% 100%;
-      transform-origin: 50% 100%;
-    }
-
-    @keyframes danceA {
-      0%   { -webkit-transform: rotate(-14deg); transform: rotate(-14deg); }
-      50%  { -webkit-transform: rotate(3deg) scaleY(0.96); transform: rotate(3deg) scaleY(0.96); }
-      100% { -webkit-transform: rotate(15deg); transform: rotate(15deg); }
-    }
-
-    @-webkit-keyframes danceA {
-      0%   { -webkit-transform: rotate(-14deg); }
-      50%  { -webkit-transform: rotate(3deg) scaleY(0.96); }
-      100% { -webkit-transform: rotate(15deg); }
-    }
-
-    @keyframes danceB {
-      0%   { -webkit-transform: rotate(14deg); transform: rotate(14deg); }
-      50%  { -webkit-transform: rotate(-3deg) scaleY(0.96); transform: rotate(-3deg) scaleY(0.96); }
-      100% { -webkit-transform: rotate(-15deg); transform: rotate(-15deg); }
-    }
-
-    @-webkit-keyframes danceB {
-      0%   { -webkit-transform: rotate(14deg); }
-      50%  { -webkit-transform: rotate(-3deg) scaleY(0.96); }
-      100% { -webkit-transform: rotate(-15deg); }
-    }
-
-    .ty-name {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(36px,9vw,48px);
-      color: var(--ink);
-      margin: 0.2rem 0 0.6rem;
-      display: block;
-      line-height: 1.1;
-    }
-
-    .ty-text {
-      font-style: italic;
-      color: var(--gold-dark);
-      font-size: clamp(14px,3.5vw,16px);
-      line-height: 1.8;
-    }
-
-    .ty-sign {
-      margin-top: 0.8rem;
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(24px,6vw,32px);
-      color: var(--ink);
-    }
-
-    /* ── GUEST COUNT BUTTON ── */
-    .guest-count-btn {
-      position: fixed;
-      bottom: clamp(0.8rem,2vw,1.2rem);
-      right: clamp(0.8rem,2vw,1.2rem);
-      background: var(--ink);
-      border: 1px solid var(--gold-light);
-      color: var(--cream-light);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(10px,2.2vw,12px);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.55rem 1rem;
-      cursor: pointer;
-      z-index: 350;
-      display: none;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      min-height: 40px;
-      min-width: 100px;
-    }
-    .guest-count-btn:hover, .guest-count-btn:active { background: #333; }
-
-    /* ── GUEST PANEL ── */
-    #guestPanel {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: var(--ink);
-      color: var(--cream-light);
-      z-index: 400;
-      -webkit-transform: translateY(100%);
-      transform: translateY(100%);
-      -webkit-transition: -webkit-transform 0.38s ease;
-      transition: transform 0.38s ease;
-      max-height: 58vh;
-      overflow-y: auto;
-      font-family: 'Cormorant Garamond', serif;
-    }
-    #guestPanel.open {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.85rem 1.2rem;
-      border-bottom: 0.5px solid rgba(255,255,255,0.15);
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
-      background: var(--ink);
-    }
-
-    .panel-title { font-size: clamp(11px,2.5vw,13px); letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); }
-
-    .panel-close {
-      background:none; border:none; color:var(--gold-dark);
-      font-size:20px; cursor:pointer; padding:6px;
-      min-width:36px; min-height:36px;
-      display:flex; align-items:center; justify-content:center;
-      -webkit-tap-highlight-color:transparent;
-      touch-action: manipulation;
-    }
-
-    .guest-list { padding: 0.7rem 1.2rem 1.4rem; }
-
-    .guest-item {
-      padding: 0.6rem 0;
-      border-bottom: 0.5px solid rgba(255,255,255,0.08);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.2rem 1rem;
-      align-items: flex-start;
-    }
-    .guest-item:last-child { border-bottom: none; }
-
-    .g-name { font-size:clamp(14px,3.5vw,16px); font-style:italic; color:var(--cream-light); flex:1 1 40%; }
-    .g-diet { font-size:clamp(12px,2.8vw,13px); color:var(--gold-dark); font-style:italic; flex:1 1 40%; }
-    .g-time { font-size:clamp(9px,2vw,10px); color:rgba(255,255,255,0.35); white-space:nowrap; flex:0 0 auto; align-self:flex-end; }
+    .section-title--light { color: var(--ivory); }
+    .section-title--dark  { color: var(--espresso); }
 
     /* ── TABLET ── */
     @media (min-width: 768px) {
-      .details { grid-template-columns:1fr 1fr; gap:1rem 2rem; }
-      .detail-row:last-child { grid-column:1/-1; }
-      .overlay-inner { align-items:center; }
+      .hero-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .families-invite-text {
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     /* ── DESKTOP ── */
     @media (min-width: 1024px) {
-      .card { padding:3.5rem 3rem; max-width:560px; }
-      .modal { max-width:420px; }
+      .story-section .story-inner { max-width: 660px; }
     }
 
+    /* ── VERY SMALL ── */
     @media (max-width: 360px) {
-      .card { padding:1.6rem 1rem; }
-      .card::before { top:6px; left:6px; right:6px; bottom:6px; }
-      .modal { padding:2rem 1rem 1.6rem; }
+      .families-split { flex-direction: column; gap: 0.8rem; }
+      .families-diamond { display: none; }
+      .venue-details-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ════════════════════════════════
+       ZULU SIDE DECORATIONS
+       Only show on screens wide enough
+       that they don't overlap content
+    ════════════════════════════════ */
+    .zulu-deco {
+      display: none; /* hidden on mobile */
+      pointer-events: none;
+      position: absolute;
+      opacity: 0.13;
+    }
+
+    .zulu-deco svg {
+      display: block;
+    }
+
+    /* Hero — shield left, spear right */
+    .hero { position: relative; overflow: hidden; }
+
+    .hero .zulu-deco--shield {
+      left: clamp(4px, 2vw, 28px);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .hero .zulu-deco--spear {
+      right: clamp(4px, 2vw, 28px);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* Families section — umqhele on both sides */
+    .families-section { position: relative; overflow: hidden; }
+
+    .families-section .zulu-deco--umqhele-l {
+      left: clamp(4px, 2vw, 20px);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .families-section .zulu-deco--umqhele-r {
+      right: clamp(4px, 2vw, 20px);
+      top: 50%;
+      transform: translateY(-50%) scaleX(-1);
+    }
+
+    /* Story section — spear left */
+    .story-section { position: relative; overflow: hidden; }
+
+    .story-section .zulu-deco--spear-l {
+      left: clamp(4px, 2vw, 16px);
+      top: 50%;
+      transform: translateY(-50%) rotate(8deg);
+    }
+
+    /* Show on tablet+ (768px+) */
+    @media (min-width: 768px) {
+      .zulu-deco { display: block; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      .wax-seal { animation: none; }
+      .seal-label { animation: none; opacity: 1; }
+      .envelope-screen--opening { animation: none; opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <div id="balloons-layer" aria-hidden="true"></div>
+  <!-- ════════════════════════════════
+       ENVELOPE SCREEN
+  ════════════════════════════════ -->
+  <div id="envelope-screen" role="button" tabindex="0" aria-label="Tap to open invitation">
 
-  <main class="page" role="main">
-    <article class="card" aria-label="Engagement Invitation for Themba and Lisa">
-      <span class="corner corner--tl" aria-hidden="true"></span>
-      <span class="corner corner--tr" aria-hidden="true"></span>
-      <span class="corner corner--bl" aria-hidden="true"></span>
-      <span class="corner corner--br" aria-hidden="true"></span>
+    <!-- envelope V-flap lines drawn in SVG -->
+    <div class="envelope-body" aria-hidden="true">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- bottom flap line -->
+        <line x1="0" y1="100" x2="50" y2="60" stroke="rgba(44,24,16,0.35)" stroke-width="0.3"/>
+        <line x1="100" y1="100" x2="50" y2="60" stroke="rgba(44,24,16,0.35)" stroke-width="0.3"/>
+        <!-- top flap line -->
+        <line x1="0" y1="0" x2="50" y2="40" stroke="rgba(44,24,16,0.35)" stroke-width="0.3"/>
+        <line x1="100" y1="0" x2="50" y2="40" stroke="rgba(44,24,16,0.35)" stroke-width="0.3"/>
+        <!-- side stitching dots -->
+        <g fill="rgba(201,146,74,0.4)">
+          <circle cx="2" cy="10" r="0.5"/><circle cx="2" cy="20" r="0.5"/>
+          <circle cx="2" cy="30" r="0.5"/><circle cx="2" cy="40" r="0.5"/>
+          <circle cx="2" cy="50" r="0.5"/><circle cx="2" cy="60" r="0.5"/>
+          <circle cx="2" cy="70" r="0.5"/><circle cx="2" cy="80" r="0.5"/>
+          <circle cx="2" cy="90" r="0.5"/>
+          <circle cx="98" cy="10" r="0.5"/><circle cx="98" cy="20" r="0.5"/>
+          <circle cx="98" cy="30" r="0.5"/><circle cx="98" cy="40" r="0.5"/>
+          <circle cx="98" cy="50" r="0.5"/><circle cx="98" cy="60" r="0.5"/>
+          <circle cx="98" cy="70" r="0.5"/><circle cx="98" cy="80" r="0.5"/>
+          <circle cx="98" cy="90" r="0.5"/>
+        </g>
+        <!-- pearl dots scattered -->
+        <g fill="rgba(250,243,232,0.55)">
+          <circle cx="18" cy="25" r="1"/><circle cx="78" cy="18" r="0.8"/>
+          <circle cx="88" cy="65" r="1"/><circle cx="12" cy="72" r="0.8"/>
+          <circle cx="55" cy="82" r="1"/><circle cx="35" cy="15" r="0.7"/>
+          <circle cx="72" cy="85" r="0.9"/><circle cx="25" cy="88" r="0.8"/>
+        </g>
+      </svg>
+    </div>
 
-      <p class="cordially">You are cordially invited to the engagement of</p>
-      <span class="name">Themba</span>
-      <span class="ampersand">&amp;</span>
-      <span class="name">Lisa</span>
+    <div class="seal-container">
 
-      <div class="divider" aria-hidden="true">
-        <div class="divider-line"></div>
-        <span class="divider-ornament">&#10022; &#10022; &#10022;</span>
-        <div class="divider-line"></div>
+      <!-- Dancing couple above the seal -->
+      <div class="dancers-wrap" aria-hidden="true">
+        <!-- Groom — left dancer -->
+        <svg class="env-dancer env-dancer--groom" width="54" height="96" viewBox="0 0 54 96" xmlns="http://www.w3.org/2000/svg">
+          <!-- head -->
+          <circle cx="27" cy="11" r="9" fill="rgba(250,220,160,0.95)"/>
+          <!-- body -->
+          <line x1="27" y1="20" x2="27" y2="54" stroke="rgba(250,220,160,0.9)" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- left arm (down) -->
+          <line x1="27" y1="30" x2="10" y2="44" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
+          <!-- right arm (raised) -->
+          <line x1="27" y1="30" x2="44" y2="18" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
+          <!-- left leg -->
+          <line x1="27" y1="54" x2="14" y2="76" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
+          <!-- right leg (kicked out) -->
+          <line x1="27" y1="54" x2="40" y2="70" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
+          <!-- right foot -->
+          <line x1="40" y1="70" x2="50" y2="78" stroke="rgba(250,220,160,0.9)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- left foot -->
+          <line x1="14" y1="76" x2="6"  y2="84" stroke="rgba(250,220,160,0.9)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- music note above head -->
+          <text x="38" y="8" font-size="11" fill="rgba(201,146,74,0.85)" font-family="serif">♪</text>
+        </svg>
+
+        <!-- Bride — right dancer -->
+        <svg class="env-dancer env-dancer--bride" width="54" height="96" viewBox="0 0 54 96" xmlns="http://www.w3.org/2000/svg">
+          <!-- head -->
+          <circle cx="27" cy="11" r="9" fill="none" stroke="rgba(250,220,160,0.9)" stroke-width="2"/>
+          <!-- hair bun -->
+          <circle cx="27" cy="3"  r="5"  fill="rgba(250,220,160,0.9)"/>
+          <!-- body -->
+          <line x1="27" y1="20" x2="27" y2="44" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
+          <!-- dress flare -->
+          <polygon points="13,44 41,44 48,82 6,82" fill="none" stroke="rgba(250,220,160,0.85)" stroke-width="2.2" stroke-linejoin="round"/>
+          <!-- left arm (raised) -->
+          <line x1="27" y1="27" x2="8"  y2="16" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
+          <!-- right arm (down-out) -->
+          <line x1="27" y1="27" x2="44" y2="38" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
+          <!-- feet peeking -->
+          <line x1="16" y1="82" x2="8"  y2="90" stroke="rgba(250,220,160,0.85)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="36" y1="82" x2="44" y2="90" stroke="rgba(250,220,160,0.85)" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- music note -->
+          <text x="6" y="8" font-size="11" fill="rgba(201,146,74,0.85)" font-family="serif">♫</text>
+        </svg>
       </div>
 
-      <div class="details">
-        <div class="detail-row">
-          <p class="detail-label">Date</p>
-          <p class="detail-value">Saturday, 6 June 2026</p>
-        </div>
-        <div class="detail-row">
-          <p class="detail-label">Arrival</p>
-          <p class="detail-value">10h30</p>
-        </div>
-        <div class="detail-row">
-          <p class="detail-label">Venue</p>
-          <p class="detail-value">62 Koedoe Ave, Birchleigh<br>House of Liberty (1st Floor)</p>
-        </div>
+      <!-- Wax seal -->
+      <svg class="wax-seal" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Wax seal — tap to open">
+        <defs>
+          <radialGradient id="sealGrad" cx="38%" cy="35%" r="65%">
+            <stop offset="0%"   stop-color="#E8975A"/>
+            <stop offset="40%"  stop-color="#C05A1A"/>
+            <stop offset="100%" stop-color="#7A2E08"/>
+          </radialGradient>
+          <radialGradient id="sealInner" cx="40%" cy="38%" r="60%">
+            <stop offset="0%"   stop-color="#D4844A"/>
+            <stop offset="100%" stop-color="#8B3A10"/>
+          </radialGradient>
+        </defs>
+        <path d="M100,12 C108,8 118,10 122,18 C128,14 138,14 142,22 C150,20 158,26 156,34 C164,36 168,44 164,52 C172,56 172,66 166,70 C170,78 166,88 158,90 C158,98 152,106 144,106 C142,114 134,120 126,118 C122,126 114,130 106,126 C102,134 94,134 90,126 C82,130 74,126 70,118 C62,120 54,114 52,106 C44,106 38,98 38,90 C30,88 26,78 30,70 C24,66 24,56 32,52 C28,44 32,36 40,34 C38,26 46,20 54,22 C58,14 68,14 74,18 C78,10 90,8 100,12Z" fill="url(#sealGrad)"/>
+        <circle cx="100" cy="70" r="52" fill="url(#sealInner)" stroke="rgba(250,200,140,0.25)" stroke-width="1.5"/>
+        <circle cx="100" cy="70" r="44" fill="none" stroke="rgba(250,200,140,0.2)" stroke-width="0.8"/>
+        <text x="100" y="62" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="22" font-style="italic" fill="rgba(250,243,232,0.92)" letter-spacing="2">T</text>
+        <text x="100" y="80" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="13" font-style="italic" fill="rgba(232,183,122,0.85)" letter-spacing="3">&amp;</text>
+        <text x="100" y="97" text-anchor="middle" font-family="'Cormorant Garamond',serif" font-size="22" font-style="italic" fill="rgba(250,243,232,0.92)" letter-spacing="2">L</text>
+        <ellipse cx="86" cy="52" rx="12" ry="7" fill="rgba(255,255,255,0.12)" transform="rotate(-20,86,52)"/>
+      </svg>
+
+      <!-- Animated tap prompt -->
+      <div class="tap-prompt" aria-hidden="true">
+        <svg class="tap-hand" width="32" height="36" viewBox="0 0 32 36" xmlns="http://www.w3.org/2000/svg">
+          <!-- finger/hand pointing up -->
+          <path d="M16 2 C16 2, 12 2, 12 7 L12 20 C12 20, 10 19, 9 20 C8 21, 9 23, 10 24 L16 32 C18 34, 22 35, 25 33 C28 31, 28 27, 28 24 L28 12 C28 12, 28 9, 26 9 C24 9, 24 11, 24 12 L24 16 C24 16, 23 14, 21 14 C19 14, 19 16, 19 16 L19 17 C19 17, 18 15, 16 15 C14 15, 14 17, 14 18 L14 7 C14 7, 14 2, 16 2Z" fill="rgba(250,220,160,0.85)" stroke="rgba(201,146,74,0.6)" stroke-width="0.8"/>
+        </svg>
+        <p class="seal-label">Tap the seal to open<br><em style="font-size:0.82em;letter-spacing:0.06em;">— Umshado Lento —</em></p>
       </div>
 
-      <div class="theme-band">
-        <p class="theme-label">Dress Code</p>
-        <p class="theme-value">Monochrome — Black &amp; White</p>
-      </div>
-
-      <button class="rsvp-btn" id="rsvpBtn" aria-haspopup="dialog">RSVP</button>
-    </article>
-  </main>
-
-  <!-- RSVP OVERLAY -->
-  <div class="overlay" id="rsvpOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="overlay-inner">
-      <div class="modal">
-        <button class="close-btn" id="closeBtn" aria-label="Close">&#10005;</button>
-
-        <div id="rsvpForm">
-          <p class="modal-title" id="modalTitle">RSVP</p>
-          <p class="modal-sub">Kindly confirm your attendance</p>
-
-          <div class="form-group">
-            <label for="guestName">Full Name</label>
-            <input type="text" id="guestName" name="guestName" placeholder="Your name" autocomplete="name" autocapitalize="words" />
-          </div>
-
-          <div class="form-group">
-            <label for="dietary">Dietary Requirements</label>
-            <textarea id="dietary" name="dietary" placeholder="Any allergies or dietary preferences? (optional)"></textarea>
-          </div>
-
-          <button class="submit-btn" id="submitBtn">Confirm Attendance</button>
-        </div>
-
-        <div class="thank-you" id="thankYou" aria-live="polite">
-
-          <!-- Dancing couple -->
-          <div id="dance-stage">
-            <!-- Groom (filled black) -->
-            <svg class="dancer dancer-a" width="44" height="84" viewBox="0 0 44 84" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="22" cy="10" r="8.5" fill="#1a1a1a"/>
-              <line x1="22" y1="19" x2="22" y2="48" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round"/>
-              <line x1="22" y1="27" x2="5" y2="38" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="22" y1="27" x2="38" y2="18" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="22" y1="48" x2="8" y2="72" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="22" y1="48" x2="36" y2="65" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="36" y1="65" x2="44" y2="72" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
-              <line x1="8" y1="72" x2="2" y2="78" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-
-            <!-- Bride (outline with dress) -->
-            <svg class="dancer dancer-b" width="44" height="84" viewBox="0 0 44 84" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="22" cy="10" r="8.5" fill="none" stroke="#1a1a1a" stroke-width="2"/>
-              <circle cx="22" cy="2.5" r="4.5" fill="#1a1a1a"/>
-              <line x1="22" y1="19" x2="22" y2="42" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-              <polygon points="10,42 34,42 38,76 6,76" fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
-              <line x1="22" y1="25" x2="5" y2="15" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="22" y1="25" x2="38" y2="33" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
-              <line x1="11" y1="76" x2="5" y2="82" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
-              <line x1="31" y1="76" x2="39" y2="82" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-
-          <p class="ty-text" style="font-size:clamp(10px,2.2vw,11px);letter-spacing:.2em;text-transform:uppercase;margin-bottom:0.15rem;">Thank you,</p>
-          <span class="ty-name" id="tyName"></span>
-          <p class="ty-text">We look forward to celebrating<br>this special day with you.</p>
-          <p class="ty-sign">Themba &amp; Lisa</p>
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- GUEST PANEL -->
-  <div id="guestPanel">
-    <div class="panel-header">
-      <p class="panel-title">Guest List &nbsp;<span id="guestCount">0</span> confirmed</p>
-      <button class="panel-close" id="panelCloseBtn" aria-label="Close">&#10005;</button>
-    </div>
-    <div class="guest-list" id="guestList"></div>
-  </div>
+  <!-- ════════════════════════════════
+       MAIN INVITATION
+  ════════════════════════════════ -->
+  <div id="invitation">
 
-  <button class="guest-count-btn" id="guestCountBtn">
-    RSVPs &nbsp;<span id="guestCountBadge">0</span>
-  </button>
+    <!-- sticky nav -->
+    <nav class="inv-nav" aria-label="Couple names">
+      <span class="inv-nav-name">Themba &amp; Lisa</span>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section class="hero" aria-label="Wedding invitation hero">
+
+      <!-- Zulu Shield — left side -->
+      <div class="zulu-deco zulu-deco--shield" aria-hidden="true">
+        <svg width="72" height="130" viewBox="0 0 72 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Shield outer shape — classic Zulu isihlangu silhouette -->
+          <path d="M36 2 C52 8, 68 24, 70 50 C72 76, 62 96, 52 110 C46 120, 40 126, 36 128 C32 126, 26 120, 20 110 C10 96, 0 76, 2 50 C4 24, 20 8, 36 2Z"
+            fill="rgba(201,146,74,0.9)" stroke="rgba(201,146,74,1)" stroke-width="1"/>
+          <!-- Shield inner lighter panel (hide pattern) -->
+          <path d="M36 12 C46 17, 58 30, 60 52 C61 72, 54 90, 46 103 C42 110, 39 115, 36 118 C33 115, 30 110, 26 103 C18 90, 11 72, 12 52 C14 30, 26 17, 36 12Z"
+            fill="rgba(250,243,232,0.15)"/>
+          <!-- Horizontal hide stripe — top -->
+          <path d="M14 36 Q36 28 58 36" stroke="rgba(44,24,16,0.5)" stroke-width="1.5" fill="none"/>
+          <!-- Horizontal hide stripe — mid-upper -->
+          <path d="M8 58 Q36 48 64 58" stroke="rgba(44,24,16,0.4)" stroke-width="1.2" fill="none"/>
+          <!-- Horizontal hide stripe — mid-lower -->
+          <path d="M10 80 Q36 72 62 80" stroke="rgba(44,24,16,0.4)" stroke-width="1.2" fill="none"/>
+          <!-- Centre spine stick (umqhathi) -->
+          <line x1="36" y1="2" x2="36" y2="128" stroke="rgba(44,24,16,0.6)" stroke-width="2" stroke-linecap="round"/>
+          <!-- Grip area markings -->
+          <ellipse cx="36" cy="65" rx="5" ry="10" fill="rgba(44,24,16,0.2)" stroke="rgba(44,24,16,0.3)" stroke-width="0.8"/>
+        </svg>
+      </div>
+
+      <!-- Zulu Spear (iKlwa) — right side -->
+      <div class="zulu-deco zulu-deco--spear" aria-hidden="true">
+        <svg width="28" height="140" viewBox="0 0 28 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Shaft -->
+          <line x1="14" y1="38" x2="14" y2="140" stroke="rgba(122,59,30,0.95)" stroke-width="4" stroke-linecap="round"/>
+          <!-- Spearhead — broad iKlwa blade -->
+          <path d="M14 2 C14 2, 5 10, 4 22 C3 30, 8 36, 14 38 C20 36, 25 30, 24 22 C23 10, 14 2, 14 2Z"
+            fill="rgba(201,146,74,0.95)" stroke="rgba(201,146,74,1)" stroke-width="0.5"/>
+          <!-- Blade centre ridge -->
+          <line x1="14" y1="4" x2="14" y2="36" stroke="rgba(250,243,232,0.3)" stroke-width="0.8"/>
+          <!-- Binding at base of blade -->
+          <rect x="11" y="35" width="6" height="8" rx="1" fill="rgba(44,24,16,0.6)"/>
+          <line x1="11" y1="37" x2="17" y2="37" stroke="rgba(201,146,74,0.5)" stroke-width="0.6"/>
+          <line x1="11" y1="39" x2="17" y2="39" stroke="rgba(201,146,74,0.5)" stroke-width="0.6"/>
+          <line x1="11" y1="41" x2="17" y2="41" stroke="rgba(201,146,74,0.5)" stroke-width="0.6"/>
+        </svg>
+      </div>
+
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Umshado Lento &nbsp;·&nbsp; Rudo Rwetichiona &nbsp;·&nbsp; A Love Celebration</p>
+
+        <span class="hero-names">Themba</span>
+        <span class="hero-ampersand">&amp;</span>
+        <span class="hero-names">Lisa</span>
+
+        <div class="hero-divider" aria-hidden="true">
+          <div class="hero-divider-line"></div>
+          <div class="hero-divider-diamond"></div>
+          <div class="hero-divider-line"></div>
+        </div>
+
+        <div class="hero-details">
+          <div>
+            <p class="hero-detail-label">Date · Usuku</p>
+            <p class="hero-detail-value">19 December 2026</p>
+          </div>
+          <div>
+            <p class="hero-detail-label">Time · Isikhathi</p>
+            <p class="hero-detail-value">12h00</p>
+          </div>
+          <div>
+            <p class="hero-detail-label">Venue · Indawo</p>
+            <p class="hero-detail-value">URlyfstyle Cottage</p>
+          </div>
+        </div>
+
+        <div class="hero-tagline">
+          Mkhize &amp; Sixpence — Together we unite our hearts
+          <span>Sihlanganisa izinhliziyo zethu &nbsp;·&nbsp; Pamwe tinobatanidza moyo yedu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAMILIES ── -->
+    <section class="families-section" aria-label="Family invitation">
+
+      <!-- Umqhele (headring) — left -->
+      <div class="zulu-deco zulu-deco--umqhele-l" aria-hidden="true">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer ring of the isicoco/umqhele -->
+          <circle cx="35" cy="35" r="32" fill="none" stroke="rgba(201,146,74,0.9)" stroke-width="5"/>
+          <!-- Inner ring -->
+          <circle cx="35" cy="35" r="24" fill="none" stroke="rgba(201,146,74,0.6)" stroke-width="2"/>
+          <!-- Woven texture lines — radial spokes -->
+          <line x1="35" y1="3"  x2="35" y2="11" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <line x1="35" y1="59" x2="35" y2="67" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <line x1="3"  y1="35" x2="11" y2="35" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <line x1="59" y1="35" x2="67" y2="35" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <!-- Diagonal spokes -->
+          <line x1="12" y1="12" x2="18" y2="18" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <line x1="52" y1="52" x2="58" y2="58" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <line x1="58" y1="12" x2="52" y2="18" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <line x1="12" y1="58" x2="18" y2="52" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <!-- Weave cross-hatch on the ring -->
+          <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(122,59,30,0.25)" stroke-width="2" stroke-dasharray="4 6"/>
+          <!-- Centre dot -->
+          <circle cx="35" cy="35" r="4" fill="rgba(201,146,74,0.5)"/>
+        </svg>
+      </div>
+
+      <!-- Umqhele — right (mirrored via CSS scaleX) -->
+      <div class="zulu-deco zulu-deco--umqhele-r" aria-hidden="true">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="35" cy="35" r="32" fill="none" stroke="rgba(201,146,74,0.9)" stroke-width="5"/>
+          <circle cx="35" cy="35" r="24" fill="none" stroke="rgba(201,146,74,0.6)" stroke-width="2"/>
+          <line x1="35" y1="3"  x2="35" y2="11" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <line x1="35" y1="59" x2="35" y2="67" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <line x1="3"  y1="35" x2="11" y2="35" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <line x1="59" y1="35" x2="67" y2="35" stroke="rgba(44,24,16,0.5)" stroke-width="1.5"/>
+          <line x1="12" y1="12" x2="18" y2="18" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <line x1="52" y1="52" x2="58" y2="58" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <line x1="58" y1="12" x2="52" y2="18" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <line x1="12" y1="58" x2="18" y2="52" stroke="rgba(44,24,16,0.4)" stroke-width="1.2"/>
+          <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(122,59,30,0.25)" stroke-width="2" stroke-dasharray="4 6"/>
+          <circle cx="35" cy="35" r="4" fill="rgba(201,146,74,0.5)"/>
+        </svg>
+      </div>
+
+      <div class="families-inner">
+        <p class="section-eyebrow">Invitation — Niyangenwa / Umemo</p>
+
+        <div class="families-split">
+          <div class="family-block">
+            <p class="family-surname">Mkhize</p>
+            <p class="family-house">Indlu yakwa-Mkhize<br><em style="font-size:0.9em;">House of Mkhize</em></p>
+          </div>
+          <div class="families-diamond" aria-hidden="true"></div>
+          <div class="family-block">
+            <p class="family-surname">Sixpence</p>
+            <p class="family-house">Imba yeSixpence<br><em style="font-size:0.9em;">House of Sixpence</em></p>
+          </div>
+        </div>
+
+        <p class="families-invite-text">
+          joyfully request the honour of your presence<br>
+          at the wedding celebration of their children
+        </p>
+
+        <span class="families-names-script">Themba &amp; Lisa</span>
+
+        <p class="families-event-detail">
+          Saturday · 19 December 2026<br>
+          URlyfstyle Cottage, Kempton Park
+        </p>
+      </div>
+    </section>
+
+    <!-- ── STORY ── -->
+    <section class="story-section" aria-label="Love story">
+
+      <!-- Spear leaning left side — very subtle -->
+      <div class="zulu-deco zulu-deco--spear-l" aria-hidden="true">
+        <svg width="22" height="120" viewBox="0 0 22 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="11" y1="32" x2="11" y2="120" stroke="rgba(122,59,30,0.8)" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M11 2 C11 2, 4 8, 3 18 C2 25, 6 30, 11 32 C16 30, 20 25, 19 18 C18 8, 11 2, 11 2Z"
+            fill="rgba(201,146,74,0.85)" stroke="rgba(201,146,74,0.9)" stroke-width="0.5"/>
+          <line x1="11" y1="4" x2="11" y2="30" stroke="rgba(250,243,232,0.25)" stroke-width="0.7"/>
+          <rect x="8.5" y="30" width="5" height="6" rx="1" fill="rgba(44,24,16,0.55)"/>
+        </svg>
+      </div>
+
+      <div class="story-inner">
+        <h2 class="story-heading">The Story of Their Love</h2>
+        <p class="story-sub">Indaba Yothando &nbsp;·&nbsp; Ngano yeRudo Rwavo</p>
+
+        <div class="story-card">
+          <p class="story-card-label">The Meeting</p>
+          <span class="story-card-sub">Ukuhlangana · Kusangana</span>
+          <p class="story-text">Their story began on 20 September 2025 at a musical art event curated by a mutual friend and Lisa's brother. Although Themba had seen Lisa from time to time and already knew who she was, she had never really paid much attention to him. That changed when she arrived at the event and noticed him playing music. Her first thought was simply that he had great taste in music. Before the event began, Themba invited everyone to share a song that could be played while they waited. Later that evening, as Lisa was leaving, their paths crossed and she said goodbye. He already knew her name, but Lisa, being terrible with names, admitted that she couldn't remember his. With a smile, Themba told her she could call him <em>"that mysterious guy."</em> She laughed and said she would do exactly that the next time they crossed paths.</p>
+        </div>
+
+        <span class="story-quote" aria-hidden="true">What began with music &amp; a forgotten name…</span>
+
+        <div class="story-card">
+          <p class="story-card-label">The Beginning</p>
+          <span class="story-card-sub">Ukuqala · Kutanga</span>
+          <p class="story-text">A few days later, Lisa got Themba's number through something her brother needed her to contact him about, and what started as an ordinary conversation soon became something neither of them expected. The more they spoke, the more naturally they were drawn to one another. Themba's thoughtful gestures — like bringing Lisa little gifts when he returned from work — slowly revealed the depth of his heart, while their conversations uncovered how beautifully aligned they were in the things that mattered most: their faith in God, their love for family, and their vision for life. What makes their story special is that Themba had noticed Lisa long before she noticed him, yet when the right moment finally came, their paths crossed in a way that felt almost perfectly timed. What began with music, a forgotten name and a mysterious guy became a love story they now get to call their own.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VENUE ── -->
+    <section class="venue-section" aria-label="Venue details">
+      <div class="venue-inner">
+        <p class="venue-eyebrow">Indawo · Venue</p>
+        <h2 class="venue-name">URlyfstyle Cottage</h2>
+        <p class="venue-address">
+          7 Hadida Crescent<br>
+          Kempton Park, 1618<br>
+          Gauteng, South Africa
+        </p>
+
+        <div class="venue-details-grid">
+          <div class="venue-detail-cell">
+            <p class="venue-detail-label">Date</p>
+            <p class="venue-detail-value">19 December 2026</p>
+          </div>
+          <div class="venue-detail-cell">
+            <p class="venue-detail-label">Arrival</p>
+            <p class="venue-detail-value">12h00</p>
+          </div>
+        </div>
+
+        <a class="map-btn"
+          href="https://www.google.com/maps/search/?api=1&query=7+Hadida+Crescent+Kempton+Park+1618"
+          target="_blank" rel="noopener noreferrer"
+          aria-label="Open venue in maps">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 1C5.24 1 3 3.24 3 6c0 3.5 5 9 5 9s5-5.5 5-9c0-2.76-2.24-5-5-5zm0 6.8c-1 0-1.8-.8-1.8-1.8S7 4.2 8 4.2s1.8.8 1.8 1.8S9 7.8 8 7.8z" fill="currentColor"/>
+          </svg>
+          Open in Maps
+        </a>
+      </div>
+    </section>
+
+    <!-- ── PROGRAMME ── -->
+    <section class="prog-section" aria-label="Programme of events">
+      <div class="prog-inner">
+        <h2 class="prog-heading section-title--dark">Programme ·</h2>
+
+        <ul class="prog-list" role="list">
+          <li class="prog-item">
+            <span class="prog-time">12h00</span>
+            <span class="prog-event">
+              Arrival &amp; Welcome
+              <span class="prog-event-sub">Ukufika Kwabantu · Kusvika kweVazhinji</span>
+            </span>
+          </li>
+          <li class="prog-item">
+            <span class="prog-time">12h30</span>
+            <span class="prog-event">
+              Ceremony
+              <span class="prog-event-sub">Umcimbi · Mabiko</span>
+            </span>
+          </li>
+          <li class="prog-item">
+            <span class="prog-time">14h00</span>
+            <span class="prog-event">
+              Reception &amp; Celebrations
+              <span class="prog-event-sub">Ukudla &amp; Ukujabula · Mafaro</span>
+            </span>
+          </li>
+          <li class="prog-item">
+            <span class="prog-time">Late</span>
+            <span class="prog-event">
+              Dancing &amp; Festivities
+              <span class="prog-event-sub">Ukugida · Kutamba</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── DRESS CODE ── -->
+    <section class="dress-section" aria-label="Dress code">
+      <p class="dress-eyebrow">Zvipfeko · Dress Code · Ingubo</p>
+      <h2 class="dress-theme">African Opulence</h2>
+      <p class="dress-sub">
+        Shades of brown — from warm cognac to deep espresso<br>
+        <em>Imibala yobushizi · Mavara echena</em>
+      </p>
+      <div class="dress-swatches" aria-label="Colour palette">
+        <div class="swatch" style="background:#2C1810;" title="Deep Espresso"></div>
+        <div class="swatch" style="background:#7A3B1E;" title="Cognac"></div>
+        <div class="swatch" style="background:#C9924A;" title="Warm Gold"></div>
+        <div class="swatch" style="background:#D4956A;" title="Dusty Terracotta"></div>
+        <div class="swatch" style="background:#E8D5B0;" title="Sandy Beige"></div>
+      </div>
+    </section>
+
+    <!-- ── RSVP ── -->
+    <section class="rsvp-section" aria-label="RSVP">
+      <div class="rsvp-inner">
+        <span class="rsvp-script">RSVP</span>
+
+        <p class="rsvp-sub">
+          Kindly confirm your attendance<br>
+          <em>Sicela uqinisekise ukuza kwakho · Tapota simbatisa kuuya kwako</em>
+        </p>
+
+        <p class="rsvp-deadline">
+          Please RSVP by 25 November 2026
+        </p>
+
+        <a class="rsvp-btn-main"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSeVYYeNVB7_uYBNBWE0YXr4gbIGU3xkZOGExJpjfLYOkcyWEQ/viewform?usp=publish-editor"
+          target="_blank" rel="noopener noreferrer"
+          aria-label="Open RSVP form">
+          Ndizobuya — Confirm Attendance
+        </a>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer class="footer" role="contentinfo">
+      <span class="footer-names">Themba &amp; Lisa</span>
+      <p class="footer-date">19 · 12 · 2026</p>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <p class="footer-zulu">Umshado Lento</p>
+      <p class="footer-translation">This Wedding &nbsp;·&nbsp; Umshado Uyu &nbsp;·&nbsp; Muchato Uyu</p>
+    </footer>
+
+  </div><!-- end #invitation -->
 
   <script>
-    (function() {
-      'use strict';
+    var envelopeEl   = document.getElementById('envelope-screen');
+    var invitationEl = document.getElementById('invitation');
+    var opened = false;
 
-      var STORE_KEY = 'thembalisa_rsvps_v1';
+    function openInvitation() {
+      if (opened) return;
+      opened = true;
 
-      function getRsvps() {
-        try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); }
-        catch(e) { return []; }
+      envelopeEl.classList.add('envelope-screen--opening');
+
+      // After animation completes, hide envelope and show invitation
+      setTimeout(function() {
+        envelopeEl.style.display = 'none';
+        invitationEl.style.display = 'block';
+        // Force reflow then add class for opacity transition
+        invitationEl.offsetHeight;
+        invitationEl.classList.add('visible');
+        window.scrollTo(0, 0);
+      }, 950);
+    }
+
+    envelopeEl.addEventListener('click', openInvitation);
+    envelopeEl.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      openInvitation();
+    });
+    envelopeEl.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openInvitation();
       }
-
-      function saveRsvp(name, dietary) {
-        var list = getRsvps();
-        list.push({
-          name: name,
-          dietary: dietary || '',
-          time: new Date().toLocaleString('en-ZA', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
-        });
-        try { localStorage.setItem(STORE_KEY, JSON.stringify(list)); } catch(e) {}
-        renderGuests(list);
-      }
-
-      function esc(s) {
-        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      }
-
-      function renderGuests(list) {
-        var n = list.length;
-        var guestCount = document.getElementById('guestCount');
-        var guestCountBadge = document.getElementById('guestCountBadge');
-        var guestCountBtn = document.getElementById('guestCountBtn');
-        var guestList = document.getElementById('guestList');
-
-        if (guestCount) guestCount.textContent = n;
-        if (guestCountBadge) guestCountBadge.textContent = n;
-        if (guestCountBtn) guestCountBtn.style.display = n > 0 ? 'block' : 'none';
-
-        if (!guestList) return;
-
-        var html = list.length === 0
-          ? '<p style="color:var(--gold-dark);font-style:italic;font-size:14px;padding:0.5rem 0;">No RSVPs yet.</p>'
-          : list.slice().reverse().map(function(g) {
-              return '<div class="guest-item">' +
-                '<span class="g-name">' + esc(g.name) + '</span>' +
-                '<span class="g-diet">' + (g.dietary ? esc(g.dietary) : '—') + '</span>' +
-                '<span class="g-time">' + esc(g.time) + '</span>' +
-              '</div>';
-            }).join('');
-        guestList.innerHTML = html;
-      }
-
-      /* ── MODAL ── */
-      function openRsvp() {
-        var overlay = document.getElementById('rsvpOverlay');
-        if (!overlay) return;
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        setTimeout(function() {
-          var n = document.getElementById('guestName');
-          if (n) n.focus();
-        }, 120);
-      }
-
-      function closeRsvp() {
-        var overlay = document.getElementById('rsvpOverlay');
-        if (!overlay) return;
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-
-        var rsvpForm = document.getElementById('rsvpForm');
-        var thankYou = document.getElementById('thankYou');
-        var danceStage = document.getElementById('dance-stage');
-        var guestName = document.getElementById('guestName');
-        var dietary = document.getElementById('dietary');
-
-        if (rsvpForm) rsvpForm.style.display = '';
-        if (thankYou) thankYou.style.display = 'none';
-        if (danceStage) danceStage.style.display = 'none';
-        if (guestName) { guestName.value = ''; guestName.classList.remove('error'); }
-        if (dietary) dietary.value = '';
-      }
-
-      function submitRsvp() {
-        var nameEl = document.getElementById('guestName');
-        if (!nameEl) return;
-        var name = nameEl.value.trim();
-        if (!name) { nameEl.classList.add('error'); nameEl.focus(); return; }
-        var dietary = document.getElementById('dietary');
-        var dietaryVal = dietary ? dietary.value.trim() : '';
-
-        saveRsvp(name, dietaryVal);
-
-        nameEl.classList.remove('error');
-        var tyName = document.getElementById('tyName');
-        if (tyName) tyName.textContent = name;
-
-        var rsvpForm = document.getElementById('rsvpForm');
-        var thankYou = document.getElementById('thankYou');
-        if (rsvpForm) rsvpForm.style.display = 'none';
-        if (thankYou) thankYou.style.display = 'block';
-
-        var stage = document.getElementById('dance-stage');
-        if (stage) stage.style.display = 'block';
-
-        // Stop dancing after exactly 2s
-        setTimeout(function() {
-          if (!stage) return;
-          var dancers = stage.querySelectorAll('.dancer');
-          for (var i = 0; i < dancers.length; i++) {
-            dancers[i].style.animation = 'none';
-            dancers[i].style.webkitAnimation = 'none';
-          }
-        }, 2000);
-      }
-
-      /* ── GUEST PANEL ── */
-      function togglePanel() {
-        var panel = document.getElementById('guestPanel');
-        if (panel) panel.classList.toggle('open');
-      }
-      function closePanel() {
-        var panel = document.getElementById('guestPanel');
-        if (panel) panel.classList.remove('open');
-      }
-
-      /* ── BALLOONS ── */
-      function buildBalloon(x, delay, size, isBlack) {
-        var el   = document.createElement('div');
-        el.className = 'balloon';
-        var sway = ((Math.random() * 36) - 18).toFixed(1) + 'deg';
-        var dur  = (5.5 + Math.random() * 4).toFixed(2) + 's';
-
-        // CRITICAL FIX: Set individual style properties instead of cssText
-        // cssText was overwriting the animation-name from the CSS class!
-        el.style.left = x + 'px';
-        el.style.setProperty('--sway', sway);
-        el.style.webkitAnimationDuration = dur;
-        el.style.animationDuration = dur;
-        el.style.webkitAnimationDelay = delay + 's';
-        el.style.animationDelay = delay + 's';
-
-        var fill   = isBlack ? '#1a1a1a' : '#ffffff';
-        var stroke = isBlack ? '#444'    : '#c9bfa8';
-        var knot   = isBlack ? '#333'    : '#d4c9b0';
-        var str    = isBlack ? '#666'    : '#bdb0a0';
-        var shine  = isBlack ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.45)';
-
-        var w = Math.round(size);
-        var h = Math.round(size * 1.28);
-        var cx = w / 2, cy = h / 2;
-        var rx = cx - 2, ry = cy - 2;
-        var sx = cx - rx * 0.35, sy = cy - ry * 0.35;
-        var sxr = rx * 0.2, syr = ry * 0.22;
-        var bot = h - 2;
-        var qx = cx + 9, qy = h + 22, ex = cx - 5, ey = h + 42;
-
-        // Use DOM methods instead of innerHTML for better mobile compatibility
-        var svgNS = 'http://www.w3.org/2000/svg';
-        var svg = document.createElementNS(svgNS, 'svg');
-        svg.setAttribute('width', w);
-        svg.setAttribute('height', h + 44);
-        svg.setAttribute('viewBox', '0 0 ' + w + ' ' + (h + 44));
-        svg.setAttribute('xmlns', svgNS);
-
-        var ellipse = document.createElementNS(svgNS, 'ellipse');
-        ellipse.setAttribute('cx', cx);
-        ellipse.setAttribute('cy', cy);
-        ellipse.setAttribute('rx', rx);
-        ellipse.setAttribute('ry', ry);
-        ellipse.setAttribute('fill', fill);
-        ellipse.setAttribute('stroke', stroke);
-        ellipse.setAttribute('stroke-width', '1.2');
-        svg.appendChild(ellipse);
-
-        var shineEl = document.createElementNS(svgNS, 'ellipse');
-        shineEl.setAttribute('cx', sx.toFixed(1));
-        shineEl.setAttribute('cy', sy.toFixed(1));
-        shineEl.setAttribute('rx', sxr.toFixed(1));
-        shineEl.setAttribute('ry', syr.toFixed(1));
-        shineEl.setAttribute('fill', shine);
-        shineEl.setAttribute('transform', 'rotate(-22,' + sx.toFixed(1) + ',' + sy.toFixed(1) + ')');
-        svg.appendChild(shineEl);
-
-        var knotEl = document.createElementNS(svgNS, 'circle');
-        knotEl.setAttribute('cx', cx);
-        knotEl.setAttribute('cy', bot);
-        knotEl.setAttribute('r', '3.5');
-        knotEl.setAttribute('fill', knot);
-        svg.appendChild(knotEl);
-
-        var path = document.createElementNS(svgNS, 'path');
-        path.setAttribute('d', 'M' + cx + ' ' + h + ' Q' + qx + ' ' + qy + ' ' + ex + ' ' + ey);
-        path.setAttribute('stroke', str);
-        path.setAttribute('stroke-width', '1');
-        path.setAttribute('fill', 'none');
-        svg.appendChild(path);
-
-        el.appendChild(svg);
-        return el;
-      }
-
-      function launchBalloons() {
-        var layer = document.getElementById('balloons-layer');
-        if (!layer) return;
-        var vw    = Math.min(window.innerWidth, window.screen ? window.screen.width : window.innerWidth);
-        var count = Math.max(10, Math.min(22, Math.floor(vw / 38)));
-        for (var i = 0; i < count; i++) {
-          var x     = 10 + Math.random() * (vw - 70);
-          var delay = Math.random() * 3;
-          var size  = 26 + Math.random() * 22;
-          layer.appendChild(buildBalloon(x, delay, size, i % 2 === 0));
-        }
-        setTimeout(function() {
-          if (layer) layer.innerHTML = '';
-        }, 10500);
-      }
-
-      /* ── EVENT LISTENERS ── */
-      // CRITICAL FIX: Use a unified handler that works for both click and touch
-      // WITHOUT calling preventDefault on touchend (which blocks click)
-      function addClickListener(id, handler) {
-        var el = document.getElementById(id);
-        if (!el) return;
-
-        var isTouch = false;
-
-        el.addEventListener('touchstart', function(e) {
-          isTouch = true;
-        }, { passive: true });
-
-        el.addEventListener('touchend', function(e) {
-          isTouch = true;
-          // Don't call preventDefault - let the click event fire naturally
-          // or call handler directly for faster response
-          handler();
-        }, { passive: true });
-
-        el.addEventListener('click', function(e) {
-          if (!isTouch) {
-            handler();
-          }
-          isTouch = false;
-        });
-      }
-
-      addClickListener('rsvpBtn', openRsvp);
-      addClickListener('closeBtn', closeRsvp);
-      addClickListener('submitBtn', submitRsvp);
-      addClickListener('guestCountBtn', togglePanel);
-      addClickListener('panelCloseBtn', closePanel);
-
-      var overlay = document.getElementById('rsvpOverlay');
-      if (overlay) {
-        overlay.addEventListener('click', function(e) {
-          if (e.target === this) closeRsvp();
-        });
-      }
-
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeRsvp();
-      });
-
-      /* ── INIT ── */
-      renderGuests(getRsvps());
-      launchBalloons();
-    })();
+    });
   </script>
 
 </body>
