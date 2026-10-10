@@ -332,10 +332,28 @@
     .zd {
       pointer-events: none;
       position: absolute;
-      display: none;
+      display: block; /* visible on ALL screen sizes */
     }
     .zd svg { display: block; }
-    @media (min-width: 768px) { .zd { display: block; } }
+
+    /* Mobile: shrink decorations and push to the very edge */
+    @media (max-width: 767px) {
+      .zd svg {
+        width: 44px !important;
+        height: auto !important;
+        opacity: 0.75;
+      }
+      .zd-l { left: 2px; }
+      .zd-r { right: 2px; }
+      /* vertically centred ones stay centred */
+      .zd-mid      { top: 50%; transform: translateY(-50%); }
+      .zd-mid-flipx { top: 50%; transform: translateY(-50%) scaleX(-1); }
+      .zd-lean-l   { top: 38%; transform: translateY(-50%) rotate(6deg); }
+      .zd-lean-r   { top: 62%; transform: translateY(-50%) rotate(-6deg); }
+      .zd-cross-l  { top: 25%; transform: translateY(-50%) rotate(15deg); }
+      .zd-cross-r  { top: 25%; transform: translateY(-50%) rotate(-15deg); }
+      .zd-bot      { bottom: 2%; }
+    }
 
     /* sections need position:relative for absolute children */
     .hero            { position: relative; overflow: hidden; }
@@ -345,6 +363,14 @@
     .prog-section    { position: relative; overflow: hidden; }
     .dress-section   { position: relative; overflow: hidden; }
     .rsvp-section    { position: relative; overflow: hidden; }
+
+    /* On mobile, clip to the section but allow decorations to sit at edges */
+    @media (max-width: 767px) {
+      .hero, .families-section, .story-section,
+      .venue-section, .prog-section, .dress-section, .rsvp-section {
+        overflow: hidden;
+      }
+    }
 
     /* reusable position helpers */
     .zd-l   { left:  clamp(4px, 2vw, 28px); }
