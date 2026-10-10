@@ -389,7 +389,109 @@
       .seal-label { animation: none; opacity: 1; }
       .envelope-screen--opening { animation: none; opacity: 0; }
     }
+
+    /* Embedded vector artwork: no asset paths or icon-font dependencies. */
+    .env-dancer { width: 54px; height: 96px; overflow: visible; }
+    .env-dancer--groom { animation-duration: 1.25s; }
+    .env-dancer--bride { animation-duration: 1.25s; }
+    .zd svg { overflow: visible; }
+    a:focus-visible, #envelope-screen:focus-visible { outline: 3px solid var(--gold); outline-offset: 5px; }
+    @media (prefers-reduced-motion: reduce) {
+      .env-dancer, .tap-hand { animation: none !important; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* Motion stays within the original icon anchors and dimensions. */
+    .env-dancer { filter: drop-shadow(0 3px 3px rgba(44,24,16,.24)); }
+    .env-dancer--groom { animation: groomStep 1.7s ease-in-out infinite; }
+    .env-dancer--bride { animation: brideStep 1.7s ease-in-out infinite; animation-delay: -.35s; }
+    @keyframes groomStep { 0%,100% { transform: translateY(0) rotate(-3deg); } 35% { transform: translateY(-3px) rotate(2deg); } 70% { transform: translateY(-1px) rotate(-1deg); } }
+    @keyframes brideStep { 0%,100% { transform: translateY(-1px) rotate(2deg); } 35% { transform: translateY(0) rotate(-2deg); } 70% { transform: translateY(-3px) rotate(1deg); } }
+    .dance-arm { transform-box: fill-box; transform-origin: 50% 90%; animation: armRhythm 1.7s ease-in-out infinite; }
+    @keyframes armRhythm { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(4deg); } }
+    #envelope-screen { touch-action: manipulation; min-height: 100svh; }
+    body.invitation-closed { overflow: hidden; }
+    .seal-container { padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom)); }
+    .envelope-screen--opening { pointer-events: none; animation: invitationUnseal .85s cubic-bezier(.22,1,.36,1) forwards; }
+    @keyframes invitationUnseal { 0% { opacity:1; transform: translateY(0); } 25% { opacity:1; transform: translateY(-2%); } 100% { opacity:0; transform: translateY(-100%); } }
+    #invitation { transition: opacity .65s ease; }
+    .inv-nav { padding-top: max(.6rem, env(safe-area-inset-top)); }
+    .hero-inner, .families-inner, .story-inner, .venue-inner, .prog-inner, .rsvp-inner { position: relative; z-index: 1; }
+    .reveal-pending { opacity:0; translate:0 18px; }
+    .reveal-ready { opacity:1; translate:0 0; transition: opacity .7s ease, translate .7s cubic-bezier(.22,1,.36,1); }
+    .map-btn, .rsvp-btn-main { touch-action: manipulation; max-width:100%; transition: background .25s ease, transform .25s ease, box-shadow .25s ease; }
+    .map-btn:active, .rsvp-btn-main:active { transform: scale(.98); }
+    @media (hover:hover) and (pointer:fine) {
+      .map-btn:hover, .rsvp-btn-main:hover { transform: translateY(-2px); box-shadow:0 5px 18px rgba(44,24,16,.15); }
+    }
+    @media (max-width:767px) {
+      .hero-inner, .families-inner, .story-inner, .venue-inner, .prog-inner, .rsvp-inner { width:100%; min-width:0; }
+      .families-section, .story-section, .venue-section, .prog-section, .dress-section, .rsvp-section { padding-left:56px; padding-right:56px; }
+      .hero-inner { padding-left:56px; padding-right:56px; }
+      .family-block, .prog-event, .venue-detail-cell { min-width:0; overflow-wrap:anywhere; }
+      .families-split { gap:12px; }
+      .family-surname { font-size:clamp(16px,4.5vw,25px); letter-spacing:.07em; }
+      .story-card { padding:20px 16px; }
+      .venue-details-grid { grid-template-columns:1fr; }
+      .prog-item { gap:10px; }
+      .prog-time { min-width:50px; }
+      .map-btn, .rsvp-btn-main { padding-left:18px; padding-right:18px; min-height:52px; }
+      .hero-detail-label, .venue-detail-label { font-size:11px; }
+    }
+    @media (max-width:360px) {
+      .families-split { flex-direction:column; }
+      .hero-inner { padding-top:24px; padding-bottom:24px; }
+      .hero-names { font-size:clamp(42px,13vw,54px); }
+    }
+    @media (max-height:550px) and (orientation:landscape) {
+      .seal-container { gap:6px; }
+      .dancers-wrap { margin:0; }
+      .wax-seal { width:110px; height:110px; }
+      .tap-hint { margin-top:4px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *, *::before, *::after { animation:none !important; transition:none !important; }
+      .reveal-pending, .reveal-ready { opacity:1; translate:none; }
+      .envelope-screen--opening { opacity:0; }
+    }
+    body.page-paused .env-dancer, body.page-paused .dance-arm, body.page-paused .wax-seal, body.page-paused .seal-label, body.page-paused .tap-hand { animation-play-state:paused; }
+
+    /* A coordinated entrance with small, viewport-limited decorative motion. */
+    #invitation.visible .hero-inner > * { animation: heroArrival .85s cubic-bezier(.22,1,.36,1) both; }
+    #invitation.visible .hero-inner > :nth-child(2) { animation-delay:.06s; }
+    #invitation.visible .hero-inner > :nth-child(3) { animation-delay:.12s; }
+    #invitation.visible .hero-inner > :nth-child(4) { animation-delay:.18s; }
+    #invitation.visible .hero-inner > :nth-child(n+5) { animation-delay:.24s; }
+    @keyframes heroArrival { from { opacity:0; translate:0 12px; } to { opacity:1; translate:0 0; } }
+    .reveal-ready { transition-duration:.6s; }
+    .prog-item.reveal-ready:nth-child(2) { transition-delay:.045s; }
+    .prog-item.reveal-ready:nth-child(3) { transition-delay:.09s; }
+    .prog-item.reveal-ready:nth-child(4) { transition-delay:.135s; }
+    .dress-theme.reveal-ready { transition-delay:.06s; }
+    .dress-sub.reveal-ready { transition-delay:.12s; }
+    .dress-swatches.reveal-ready { transition-delay:.18s; }
+    .dress-swatches.reveal-ready .swatch { animation: swatchArrival .5s cubic-bezier(.22,1,.36,1) both; }
+    .dress-swatches.reveal-ready .swatch:nth-child(2) { animation-delay:.04s; }
+    .dress-swatches.reveal-ready .swatch:nth-child(3) { animation-delay:.08s; }
+    .dress-swatches.reveal-ready .swatch:nth-child(4) { animation-delay:.12s; }
+    .dress-swatches.reveal-ready .swatch:nth-child(5) { animation-delay:.16s; }
+    @keyframes swatchArrival { from { opacity:0; transform:scale(.88); } to { opacity:1; transform:scale(1); } }
+    .motion-enabled .zd svg { animation: ornamentDrift 6s ease-in-out infinite; animation-play-state:paused; }
+    .motion-enabled .zd-r svg { animation-delay:-3s; }
+    .motion-enabled.motion-active .zd svg { animation-play-state:running; }
+    @keyframes ornamentDrift { 0%,100% { translate:0 0; } 50% { translate:0 -2px; } }
+    body.page-paused .zd svg { animation-play-state:paused !important; }
+    @media (max-width:767px) {
+      .prog-section { padding-left:clamp(24px,6vw,40px); }
+      .dress-section { padding-left:clamp(24px,6vw,40px); padding-right:clamp(24px,6vw,40px); }
+      .dress-section { padding-bottom:72px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      #invitation.visible .hero-inner > *, .dress-swatches .swatch, .motion-enabled .zd svg { animation:none !important; }
+      .reveal-ready { transition:none !important; }
+    }
   </style>
+  <noscript><style>#envelope-screen { display:none !important; } #invitation { display:block !important; opacity:1 !important; }</style></noscript>
 </head>
 <body>
 
@@ -422,28 +524,43 @@
 
     <div class="seal-container">
       <div class="dancers-wrap" aria-hidden="true">
-        <svg class="env-dancer env-dancer--groom" width="54" height="96" viewBox="0 0 54 96" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="27" cy="11" r="9" fill="rgba(250,220,160,0.95)"/>
-          <line x1="27" y1="20" x2="27" y2="54" stroke="rgba(250,220,160,0.9)" stroke-width="3.5" stroke-linecap="round"/>
-          <line x1="27" y1="30" x2="10" y2="44" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="27" y1="30" x2="44" y2="18" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="27" y1="54" x2="14" y2="76" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="27" y1="54" x2="40" y2="70" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="40" y1="70" x2="50" y2="78" stroke="rgba(250,220,160,0.9)" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="14" y1="76" x2="6"  y2="84" stroke="rgba(250,220,160,0.9)" stroke-width="2.5" stroke-linecap="round"/>
-          <text x="38" y="8" font-size="11" fill="rgba(201,146,74,0.85)" font-family="serif">♪</text>
-        </svg>
-        <svg class="env-dancer env-dancer--bride" width="54" height="96" viewBox="0 0 54 96" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="27" cy="11" r="9" fill="none" stroke="rgba(250,220,160,0.9)" stroke-width="2"/>
-          <circle cx="27" cy="3"  r="5" fill="rgba(250,220,160,0.9)"/>
-          <line x1="27" y1="20" x2="27" y2="44" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
-          <polygon points="13,44 41,44 48,82 6,82" fill="none" stroke="rgba(250,220,160,0.85)" stroke-width="2.2" stroke-linejoin="round"/>
-          <line x1="27" y1="27" x2="8"  y2="16" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="27" y1="27" x2="44" y2="38" stroke="rgba(250,220,160,0.9)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="16" y1="82" x2="8"  y2="90" stroke="rgba(250,220,160,0.85)" stroke-width="2.2" stroke-linecap="round"/>
-          <line x1="36" y1="82" x2="44" y2="90" stroke="rgba(250,220,160,0.85)" stroke-width="2.2" stroke-linecap="round"/>
-          <text x="6" y="8" font-size="11" fill="rgba(201,146,74,0.85)" font-family="serif">♫</text>
-        </svg>
+        <svg focusable="false" aria-hidden="true" class="env-dancer env-dancer--groom" width="54" height="96" viewBox="0 0 54 96" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="groom-skin" x1="0" x2="1"><stop stop-color="#643c28"/><stop offset=".5" stop-color="#b77d51"/><stop offset="1" stop-color="#805035"/></linearGradient><linearGradient id="groom-hide" x1="0" x2="1"><stop stop-color="#59351f"/><stop offset=".5" stop-color="#d4ad70"/><stop offset="1" stop-color="#82502c"/></linearGradient></defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+<path d="M23 58 Q21 66 20 73 L12 84 Q9 87 5 87 Q3 90 7 91 L15 90 L25 77 Q29 68 30 61Z" fill="url(#groom-skin)"/>
+<path d="M32 59 Q35 69 42 73 L39 82 Q36 84 37 87 L44 87 Q48 85 46 82 L49 73 Q49 70 44 67 L39 57Z" fill="url(#groom-skin)"/>
+<path d="M22 28 Q17 28 15 35 L10 40 L5 34 Q3 30 1 32 Q0 35 3 39 L9 46 Q12 48 16 43 L24 35Z" fill="url(#groom-skin)"/>
+<g class="dance-arm"><path d="M34 28 Q38 27 41 24 L44 16 L43 11 Q44 8 46 10 L48 15 Q49 17 48 21 L44 30 Q42 34 36 36Z" fill="url(#groom-skin)"/></g>
+<path d="M27 23 L26 28 Q21 28 20 34 Q22 41 22 49 L39 49 Q38 41 38 33 Q38 28 32 27 L32 23Z" fill="url(#groom-skin)"/>
+<path d="M24 35 Q28 39 30 34 M32 34 Q34 39 36 35 M30 37 L29 45" fill="none" stroke="#d3a16f" stroke-width=".65" opacity=".7"/>
+<path d="M24 10 Q27 5 33 8 Q37 10 36 17 L35 22 Q32 27 28 25 Q25 23 25 19 L23 18Z" fill="url(#groom-skin)"/>
+<path d="M24 12 Q23 6 29 5 Q36 5 37 11 L34 10 L25 13Z" fill="#302117"/>
+<path d="M25 12 L36 10 L36 13 L25 15Z" fill="#cfa671"/><path d="M26 13 L28 12 L30 13 L32 11 L34 12" fill="none" stroke="#503122" stroke-width=".8"/>
+<ellipse cx="35" cy="17" rx=".65" ry=".55" fill="#26180f"/><path d="M34 18 L36 20 L34 20 M30 22 Q32 23 34 22" fill="none" stroke="#563222" stroke-width=".7"/>
+<path d="M22 47 Q30 50 39 47 L41 58 Q29 65 18 59Z" fill="url(#groom-hide)" stroke="#543420" stroke-width=".6"/>
+<path d="M22 50 L20 59 M27 51 L26 61 M32 51 L32 61 M37 50 L39 58" stroke="#f1d19c" stroke-width="1.3"/>
+<path d="M22 47 Q30 50 39 47" fill="none" stroke="#efe0bd" stroke-width="2"/>
+<path d="M18 74 L23 77 M39 77 L44 79" stroke="#ece0c4" stroke-width="3"/>
+</g></svg>
+        <svg focusable="false" aria-hidden="true" class="env-dancer env-dancer--bride" width="54" height="96" viewBox="0 0 54 96" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="bride-skin" x1="0" x2="1"><stop stop-color="#774830"/><stop offset=".55" stop-color="#c58e60"/><stop offset="1" stop-color="#875335"/></linearGradient><linearGradient id="bride-skirt" x1="0" x2="1"><stop stop-color="#6e3b22"/><stop offset=".5" stop-color="#ca9657"/><stop offset="1" stop-color="#82502f"/></linearGradient></defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+<path d="M19 76 L18 83 L10 89 Q7 89 7 91 Q12 93 16 90 L24 85 L25 77 M34 77 L36 84 L43 89 Q48 92 49 89 L40 82 L40 75" fill="url(#bride-skin)"/>
+<path d="M22 30 Q18 29 14 25 L10 19 L11 14 Q10 11 8 13 L7 18 Q6 21 8 24 L13 32 Q17 36 23 37Z" fill="url(#bride-skin)"/>
+<g class="dance-arm"><path d="M32 30 Q36 30 40 35 L44 39 L47 32 Q47 28 49 28 Q52 28 50 33 L48 43 Q46 47 42 44 L32 37Z" fill="url(#bride-skin)"/></g>
+<path d="M24 24 L24 29 Q19 31 21 36 L23 43 L20 48 L36 48 L33 42 L35 34 Q35 30 30 29 L30 24Z" fill="url(#bride-skin)"/>
+<path d="M22 33 Q27 38 33 33 L32 41 Q27 44 23 40Z" fill="#f0d8ad"/>
+<path d="M23 34 L26 37 L29 34 L32 37 M23 40 L32 40" fill="none" stroke="#976134" stroke-width=".9"/>
+<path d="M21 14 Q24 8 30 10 Q35 12 34 19 L32 24 Q30 27 26 26 Q22 25 22 20 L20 18Z" fill="url(#bride-skin)"/>
+<path d="M23 18 Q20 10 27 9 Q33 9 35 16 L33 21 L32 15Z" fill="#342018"/>
+<path d="M17 13 Q17 4 27 3 Q38 3 39 12 L37 15 Q27 11 18 16Z" fill="#b97840" stroke="#eed2a0" stroke-width=".8"/>
+<path d="M19 8 Q27 5 36 8 M18 11 Q27 8 37 11 M21 5 L22 12 M26 4 L27 12 M32 5 L32 12" fill="none" stroke="#ebc995" stroke-width=".7"/>
+<ellipse cx="24" cy="19" rx=".6" ry=".5" fill="#301c12"/><path d="M23 20 L21 22 L24 22 M24 24 Q26 25 28 24" fill="none" stroke="#69422b" stroke-width=".6"/>
+<circle cx="32" cy="23" r="1.1" fill="#e8c785"/>
+<path d="M21 46 Q27 48 35 46 Q38 58 45 69 L48 77 Q30 86 8 77 Q17 60 21 46Z" fill="url(#bride-skirt)" stroke="#5d3521" stroke-width=".7"/>
+<path d="M22 50 Q20 67 16 76 M27 51 L26 79 M32 51 Q33 68 36 78 M36 52 Q38 67 43 76" fill="none" stroke="#e2b87a" stroke-width="1.2"/>
+<path d="M11 74 Q28 81 45 74 M10 77 Q28 84 47 77" fill="none" stroke="#f0dbb4" stroke-width="1.3"/>
+<path d="M20 46 Q28 49 36 46" fill="none" stroke="#f0dbb4" stroke-width="2"/>
+<path d="M17 83 L21 85 M38 83 L41 85" stroke="#ead4a6" stroke-width="2"/>
+</g></svg>
       </div>
 
       <svg class="wax-seal" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Wax seal — tap to open">
@@ -462,7 +579,8 @@
 
       <div class="tap-prompt" aria-hidden="true">
         <svg class="tap-hand" width="32" height="36" viewBox="0 0 32 36" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 2 C16 2, 12 2, 12 7 L12 20 C12 20, 10 19, 9 20 C8 21, 9 23, 10 24 L16 32 C18 34, 22 35, 25 33 C28 31, 28 27, 28 24 L28 12 C28 12, 28 9, 26 9 C24 9, 24 11, 24 12 L24 16 C24 16, 23 14, 21 14 C19 14, 19 16, 19 16 L19 17 C19 17, 18 15, 16 15 C14 15, 14 17, 14 18 L14 7 C14 7, 14 2, 16 2Z" fill="rgba(250,220,160,0.85)" stroke="rgba(201,146,74,0.6)" stroke-width="0.8"/>
+          <path d="M12 20 L12 5 C12 1,17 1,17 5 L17 17 C18 14,22 15,22 18 C24 15,27 17,27 20 C29 18,31 21,30 24 L29 29 C28 33,25 35,21 34 L17 33 C15 32,13 30,12 28 L6 22 C4 20,5 17,7 17 C9 17,10 19,12 20Z" fill="rgba(250,220,160,0.85)" stroke="rgba(201,146,74,0.6)" stroke-width="0.8" stroke-linejoin="round"/>
+          <path d="M17 18 L17 23 M22 19 L22 24 M27 21 L27 25 M12 21 L15 25" fill="none" stroke="rgba(122,59,30,0.55)" stroke-width="0.8" stroke-linecap="round"/>
         </svg>
         <p class="seal-label">Tap the seal to open<br><em style="font-size:0.82em;letter-spacing:0.06em;">— iLobola Lento —</em></p>
       </div>
@@ -483,96 +601,17 @@
 
       <!-- ═══ COW 4 — hero bottom left — small, espresso dark ═══ -->
       <div class="zd zd-l" style="bottom:4%;opacity:0.65;" aria-hidden="true">
-        <svg width="95" height="76" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg">
-          <!-- body -->
-          <rect x="18" y="28" width="68" height="34" rx="10" fill="#3A1808" stroke="#2C1810" stroke-width="1.2"/>
-          <!-- white patches -->
-          <ellipse cx="50" cy="40" rx="15" ry="10" fill="#F5EDD6" opacity="0.65"/>
-          <ellipse cx="78" cy="34" rx="8" ry="6" fill="#F5EDD6" opacity="0.5"/>
-          <!-- neck -->
-          <rect x="14" y="32" width="14" height="18" rx="5" fill="#3A1808" stroke="#2C1810" stroke-width="1"/>
-          <!-- head -->
-          <ellipse cx="12" cy="38" rx="13" ry="11" fill="#4A2410" stroke="#2C1810" stroke-width="1.2"/>
-          <!-- snout -->
-          <rect x="0" y="36" width="14" height="9" rx="4" fill="#6B3A20" stroke="#2C1810" stroke-width="1"/>
-          <circle cx="4"  cy="40" r="1.8" fill="#1C0A04"/>
-          <circle cx="10" cy="40" r="1.8" fill="#1C0A04"/>
-          <!-- eye -->
-          <circle cx="17" cy="34" r="2.5" fill="#1C0A04"/>
-          <circle cx="16" cy="33" r="0.9" fill="rgba(255,255,255,0.6)"/>
-          <!-- ear -->
-          <ellipse cx="22" cy="28" rx="5" ry="3.5" fill="#6B3A20" stroke="#2C1810" stroke-width="0.8" transform="rotate(-30,22,28)"/>
-          <!-- horns -->
-          <path d="M18 28 C16 20,8 16,6 20" stroke="#C9924A" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <path d="M24 26 C24 18,16 14,14 18" stroke="#C9924A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- udder -->
-          <ellipse cx="58" cy="64" rx="10" ry="5" fill="#8B4A28" stroke="#2C1810" stroke-width="0.8"/>
-          <line x1="54" y1="68" x2="53" y2="73" stroke="#7A3A18" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="58" y1="69" x2="58" y2="74" stroke="#7A3A18" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="62" y1="68" x2="63" y2="73" stroke="#7A3A18" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- legs -->
-          <rect x="26" y="60" width="9" height="22" rx="3" fill="#2C1410" stroke="#2C1810" stroke-width="1"/>
-          <rect x="40" y="60" width="9" height="22" rx="3" fill="#2C1410" stroke="#2C1810" stroke-width="1"/>
-          <rect x="62" y="60" width="9" height="22" rx="3" fill="#2C1410" stroke="#2C1810" stroke-width="1"/>
-          <rect x="76" y="60" width="9" height="22" rx="3" fill="#2C1410" stroke="#2C1810" stroke-width="1"/>
-          <!-- hooves -->
-          <rect x="26" y="79" width="9" height="5" rx="2" fill="#0E0604"/>
-          <rect x="40" y="79" width="9" height="5" rx="2" fill="#0E0604"/>
-          <rect x="62" y="79" width="9" height="5" rx="2" fill="#0E0604"/>
-          <rect x="76" y="79" width="9" height="5" rx="2" fill="#0E0604"/>
-          <!-- tail -->
-          <path d="M86 36 C96 30,100 38,96 46 C93 52,96 58,94 62" stroke="#2C1410" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <ellipse cx="93" cy="64" rx="5" ry="3" fill="#1C0A04"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="95" height="76" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg"><g stroke="#44291c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 52 L34 78 L29 80 L28 54 M48 55 L46 79 L41 80 L40 55 M77 54 L80 78 L85 80 L85 51 M66 56 L68 78 L73 80 L74 53" fill="#79513a"/><path d="M88 34 Q101 33 98 54 L101 63" fill="none"/><path d="M98 60 Q105 63 101 70 Q95 66 98 60" fill="#44291c"/><path d="M26 31 Q37 22 65 26 Q88 25 91 40 L87 57 Q66 64 43 57 L30 52 L24 44Z" fill="#b88a62"/><path d="M45 27 Q40 37 50 42 Q65 43 59 27 M74 29 Q64 44 76 52 L87 49 L88 37Z" fill="#f4e6cc" stroke="none"/><path d="M32 32 L28 23 L18 24 L14 35 L10 45 Q11 52 21 51 L30 43Z" fill="#79513a"/><path d="M18 25 Q9 22 10 13 Q13 20 20 20 M25 24 Q31 19 28 10 Q25 18 23 20" fill="#e8d5b0"/><path d="M15 30 Q4 24 5 31 Q8 36 15 34 M28 29 Q36 23 35 30 L29 34" fill="#b88a62"/><path d="M10 43 Q17 39 24 43 L22 50 Q12 55 10 48Z" fill="#d0ad8b"/><circle cx="19" cy="34" r="1.8" fill="#24150f" stroke="none"/><path d="M13 46 L14 46 M20 46 L21 46 M29 79 L35 79 M41 79 L47 79 M68 79 L74 79 M80 79 L86 79" stroke="#24150f" stroke-width="3"/><path d="M60 59 Q65 67 71 60" fill="#d0ad8b"/></g></svg>
       </div>
 
       <!-- ═══ COLOURED SHIELD — LEFT ═══ -->
       <div class="zd zd-l zd-mid" aria-hidden="true">
-        <svg width="86" height="156" viewBox="0 0 86 156" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="shRed1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4A1E08"/><stop offset="50%" stop-color="#8B4A1E"/><stop offset="100%" stop-color="#4A1E08"/></linearGradient>
-            <linearGradient id="spine1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8C870"/><stop offset="100%" stop-color="#9A6820"/></linearGradient>
-          </defs>
-          <path d="M43 3 C62 9,83 31,83 60 C83 89,71 113,59 130 C53 139,47 146,43 149 C39 146,33 139,27 130 C15 113,3 89,3 60 C3 31,24 9,43 3Z" fill="#1C0A04" stroke="#C9924A" stroke-width="1.6"/>
-          <path d="M43 12 C59 17,73 33,75 58 L43 58 L11 58 C13 33,27 17,43 12Z" fill="url(#shRed1)"/>
-          <rect x="11" y="58" width="64" height="24" fill="#F7EDD6" rx="1"/>
-          <path d="M43 82 L75 82 C73 105,62 122,51 135 C47 141,45 146,43 148 C41 146,39 141,35 135 C24 122,13 105,11 82Z" fill="url(#shRed1)"/>
-          <polygon points="11,58 25,70 11,82" fill="#1C0A04"/>
-          <polygon points="75,58 61,70 75,82" fill="#1C0A04"/>
-          <circle cx="29" cy="37" r="3.5" fill="#E2B87A" opacity="0.85"/>
-          <circle cx="57" cy="37" r="3.5" fill="#E2B87A" opacity="0.85"/>
-          <circle cx="29" cy="108" r="3.5" fill="#E2B87A" opacity="0.85"/>
-          <circle cx="57" cy="108" r="3.5" fill="#E2B87A" opacity="0.85"/>
-          <line x1="43" y1="3" x2="43" y2="149" stroke="url(#spine1)" stroke-width="2.8" stroke-linecap="round"/>
-          <rect x="39" y="72" width="8" height="18" rx="2.5" fill="#1C0A04" stroke="#C9924A" stroke-width="1"/>
-          <line x1="39" y1="75" x2="47" y2="75" stroke="#C9924A" stroke-width="0.9"/>
-          <line x1="39" y1="78" x2="47" y2="78" stroke="#C9924A" stroke-width="0.9"/>
-          <line x1="39" y1="81" x2="47" y2="81" stroke="#C9924A" stroke-width="0.9"/>
-          <line x1="39" y1="84" x2="47" y2="84" stroke="#C9924A" stroke-width="0.9"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="86" height="156" viewBox="0 0 86 156" xmlns="http://www.w3.org/2000/svg"><g transform="scale(1.075 1.04)"><path d="M40 5 Q73 24 73 70 Q72 113 40 145 Q8 113 7 70 Q7 24 40 5Z" fill="#493025" stroke="#c9924a" stroke-width="1.7"/><path d="M40 12 Q16 29 14 66 Q13 110 40 136 Q65 107 66 65 Q63 31 40 12Z" fill="#d7c2a2"/><path d="M21 31 Q28 22 38 16 L33 48 L16 60 M49 29 L62 43 L64 68 L48 58Z M16 86 L34 78 L30 118 L22 105Z M49 87 L63 79 L57 109 L43 132Z" fill="#493025"/><path d="M40 7 L40 143" stroke="#a77340" stroke-width="3"/><g stroke="#f9efd9" stroke-width="3" stroke-linecap="round"><path d="M32 47 L48 47"/><path d="M32 55 L48 55"/><path d="M32 63 L48 63"/><path d="M32 71 L48 71"/><path d="M32 79 L48 79"/><path d="M32 87 L48 87"/><path d="M32 95 L48 95"/></g><path d="M40 15 L40 135" stroke="#392319" stroke-width="1"/></g></svg>
       </div>
 
       <!-- ═══ COLOURED SPEAR — RIGHT ═══ -->
       <div class="zd zd-r zd-mid" aria-hidden="true">
-        <svg width="36" height="175" viewBox="0 0 36 175" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="blade1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7A8E9A"/><stop offset="50%" stop-color="#DCE8F0"/><stop offset="100%" stop-color="#7A8E9A"/></linearGradient>
-            <linearGradient id="shaft1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3A1808"/><stop offset="50%" stop-color="#8B4A18"/><stop offset="100%" stop-color="#3A1808"/></linearGradient>
-          </defs>
-          <rect x="15" y="56" width="6" height="119" rx="3" fill="url(#shaft1)"/>
-          <line x1="16" y1="74"  x2="20" y2="86"  stroke="rgba(44,24,16,0.28)" stroke-width="0.9"/>
-          <line x1="16" y1="106" x2="20" y2="118" stroke="rgba(44,24,16,0.28)" stroke-width="0.9"/>
-          <line x1="16" y1="138" x2="20" y2="150" stroke="rgba(44,24,16,0.28)" stroke-width="0.9"/>
-          <path d="M18 2 C18 2,4 14,3 30 C2 42,9 53,18 55 C27 53,34 42,33 30 C32 14,18 2,18 2Z" fill="url(#blade1)" stroke="#6688AA" stroke-width="1"/>
-          <line x1="18" y1="4" x2="18" y2="53" stroke="rgba(255,255,255,0.55)" stroke-width="1.5"/>
-          <line x1="11" y1="16" x2="13.5" y2="52" stroke="rgba(180,205,225,0.4)" stroke-width="0.8"/>
-          <line x1="25" y1="16" x2="22.5" y2="52" stroke="rgba(180,205,225,0.4)" stroke-width="0.8"/>
-          <rect x="13" y="53" width="10" height="6" rx="1" fill="#CC2200"/>
-          <rect x="13" y="59" width="10" height="5" rx="0" fill="#C9924A"/>
-          <rect x="13" y="64" width="10" height="4" rx="0" fill="#1C0A04"/>
-          <line x1="13" y1="55" x2="23" y2="55" stroke="rgba(255,210,140,0.3)" stroke-width="0.7"/>
-          <line x1="13" y1="57" x2="23" y2="57" stroke="rgba(255,210,140,0.3)" stroke-width="0.7"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="36" height="175" viewBox="0 0 36 175" xmlns="http://www.w3.org/2000/svg"><g transform="scale(1.0588235294117647 1.0)"><g stroke-linecap="round" stroke-linejoin="round"><path d="M17 49 L17 168" stroke="#432719" stroke-width="6"/><path d="M16 67 L16 165" stroke="#b78551" stroke-width="1.4"/><path d="M17 4 Q8 21 5 34 Q5 45 17 53 Q29 45 29 34 Q26 21 17 4Z" fill="#c5c8bd" stroke="#594a39" stroke-width="1.3"/><path d="M17 5 L17 51 L7 34Z" fill="#eeeadc"/><path d="M17 8 L17 49" stroke="#766b58"/><path d="M12 53 L22 53 L22 65 L12 65Z" fill="#513020"/><path d="M12 55 L22 57 M12 59 L22 61 M12 63 L22 65" stroke="#d6ab6c" stroke-width="1.6"/></g></g></svg>
       </div>
 
       <div class="hero-inner">
@@ -602,7 +641,7 @@
           </div>
           <div>
             <p class="hero-detail-label">Time </p>
-            <p class="hero-detail-value">13h00</p>
+            <p class="hero-detail-value">12h00</p>
           </div>
           <div>
             <p class="hero-detail-label">Venue </p>
@@ -622,111 +661,22 @@
 
       <!-- ═══ COLOURED SPEAR — LEFT lean ═══ -->
       <div class="zd zd-l zd-lean-l" aria-hidden="true">
-        <svg width="32" height="158" viewBox="0 0 32 158" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="blade2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7A8E9A"/><stop offset="50%" stop-color="#DCE8F0"/><stop offset="100%" stop-color="#7A8E9A"/></linearGradient></defs>
-          <rect x="13" y="48" width="6" height="110" rx="3" fill="#6B3318"/>
-          <line x1="14" y1="66"  x2="18" y2="78"  stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <line x1="14" y1="98"  x2="18" y2="110" stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <line x1="14" y1="128" x2="18" y2="140" stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <path d="M16 2 C16 2,3 13,2 27 C1 38,8 46,16 48 C24 46,31 38,30 27 C29 13,16 2,16 2Z" fill="url(#blade2)" stroke="#7799BB" stroke-width="1"/>
-          <line x1="16" y1="4" x2="16" y2="46" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
-          <rect x="11" y="46" width="10" height="6" rx="1" fill="#8B1A1A"/>
-          <rect x="11" y="52" width="10" height="4" rx="0" fill="#C9924A"/>
-          <rect x="11" y="56" width="10" height="4" rx="0" fill="#1C0A04"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="32" height="158" viewBox="0 0 32 158" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.9411764705882353 0.9028571428571428)"><g stroke-linecap="round" stroke-linejoin="round"><path d="M17 49 L17 168" stroke="#432719" stroke-width="6"/><path d="M16 67 L16 165" stroke="#b78551" stroke-width="1.4"/><path d="M17 4 Q8 21 5 34 Q5 45 17 53 Q29 45 29 34 Q26 21 17 4Z" fill="#c5c8bd" stroke="#594a39" stroke-width="1.3"/><path d="M17 5 L17 51 L7 34Z" fill="#eeeadc"/><path d="M17 8 L17 49" stroke="#766b58"/><path d="M12 53 L22 53 L22 65 L12 65Z" fill="#513020"/><path d="M12 55 L22 57 M12 59 L22 61 M12 63 L22 65" stroke="#d6ab6c" stroke-width="1.6"/></g></g></svg>
       </div>
 
       <!-- ═══ COLOURED SHIELD — RIGHT (flipped) ═══ -->
       <div class="zd zd-r zd-mid-flipx" aria-hidden="true">
-        <svg width="80" height="146" viewBox="0 0 80 146" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="shRed2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4A1E08"/><stop offset="50%" stop-color="#8B4A1E"/><stop offset="100%" stop-color="#4A1E08"/></linearGradient></defs>
-          <path d="M40 3 C58 9,77 29,77 56 C77 83,66 106,55 122 C49 131,44 138,40 141 C36 138,31 131,25 122 C14 106,3 83,3 56 C3 29,22 9,40 3Z" fill="#1C0A04" stroke="#C9924A" stroke-width="1.5"/>
-          <path d="M40 11 C55 16,68 31,70 54 L40 54 L10 54 C12 31,25 16,40 11Z" fill="url(#shRed2)"/>
-          <rect x="10" y="54" width="60" height="22" fill="#F7EDD6" rx="1"/>
-          <path d="M40 76 L70 76 C68 97,58 114,48 126 C44 132,42 137,40 139 C38 137,36 132,32 126 C22 114,12 97,10 76Z" fill="url(#shRed2)"/>
-          <polygon points="10,54 23,65 10,76" fill="#1C0A04"/>
-          <polygon points="70,54 57,65 70,76" fill="#1C0A04"/>
-          <circle cx="27" cy="34" r="3" fill="#E2B87A" opacity="0.85"/>
-          <circle cx="53" cy="34" r="3" fill="#E2B87A" opacity="0.85"/>
-          <circle cx="27" cy="100" r="3" fill="#E2B87A" opacity="0.85"/>
-          <circle cx="53" cy="100" r="3" fill="#E2B87A" opacity="0.85"/>
-          <line x1="40" y1="3" x2="40" y2="141" stroke="#C9924A" stroke-width="2.2" stroke-linecap="round"/>
-          <rect x="36" y="66" width="8" height="14" rx="2" fill="#1C0A04" stroke="#C9924A" stroke-width="1"/>
-          <line x1="36" y1="69" x2="44" y2="69" stroke="#C9924A" stroke-width="0.8"/>
-          <line x1="36" y1="72" x2="44" y2="72" stroke="#C9924A" stroke-width="0.8"/>
-          <line x1="36" y1="75" x2="44" y2="75" stroke="#C9924A" stroke-width="0.8"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="80" height="146" viewBox="0 0 80 146" xmlns="http://www.w3.org/2000/svg"><g transform="scale(1.0 0.9733333333333334)"><path d="M40 5 Q73 24 73 70 Q72 113 40 145 Q8 113 7 70 Q7 24 40 5Z" fill="#493025" stroke="#c9924a" stroke-width="1.7"/><path d="M40 12 Q16 29 14 66 Q13 110 40 136 Q65 107 66 65 Q63 31 40 12Z" fill="#d7c2a2"/><path d="M21 31 Q28 22 38 16 L33 48 L16 60 M49 29 L62 43 L64 68 L48 58Z M16 86 L34 78 L30 118 L22 105Z M49 87 L63 79 L57 109 L43 132Z" fill="#493025"/><path d="M40 7 L40 143" stroke="#a77340" stroke-width="3"/><g stroke="#f9efd9" stroke-width="3" stroke-linecap="round"><path d="M32 47 L48 47"/><path d="M32 55 L48 55"/><path d="M32 63 L48 63"/><path d="M32 71 L48 71"/><path d="M32 79 L48 79"/><path d="M32 87 L48 87"/><path d="M32 95 L48 95"/></g><path d="M40 15 L40 135" stroke="#392319" stroke-width="1"/></g></svg>
       </div>
 
       <!-- ═══ COLOURED UMQHELE — bottom right ═══ -->
       <div class="zd zd-r zd-bot" aria-hidden="true">
-        <svg width="78" height="78" viewBox="0 0 78 78" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="uRing1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C9924A"/><stop offset="50%" stop-color="#E8C870"/><stop offset="100%" stop-color="#8B5A14"/></linearGradient>
-          </defs>
-          <circle cx="39" cy="39" r="35" fill="none" stroke="url(#uRing1)" stroke-width="7"/>
-          <circle cx="39" cy="39" r="26" fill="none" stroke="#C9924A" stroke-width="2.5"/>
-          <circle cx="39" cy="39" r="18" fill="none" stroke="#E2B87A" stroke-width="1" stroke-dasharray="3 5"/>
-          <!-- radial spokes -->
-          <line x1="39" y1="4"  x2="39" y2="14" stroke="#7A4A10" stroke-width="2"/>
-          <line x1="39" y1="64" x2="39" y2="74" stroke="#7A4A10" stroke-width="2"/>
-          <line x1="4"  y1="39" x2="14" y2="39" stroke="#7A4A10" stroke-width="2"/>
-          <line x1="64" y1="39" x2="74" y2="39" stroke="#7A4A10" stroke-width="2"/>
-          <line x1="12" y1="12" x2="19" y2="19" stroke="#7A4A10" stroke-width="1.5"/>
-          <line x1="59" y1="59" x2="66" y2="66" stroke="#7A4A10" stroke-width="1.5"/>
-          <line x1="66" y1="12" x2="59" y2="19" stroke="#7A4A10" stroke-width="1.5"/>
-          <line x1="12" y1="66" x2="19" y2="59" stroke="#7A4A10" stroke-width="1.5"/>
-          <!-- weave dashes on thick ring -->
-          <circle cx="39" cy="39" r="31" fill="none" stroke="rgba(90,50,10,0.35)" stroke-width="3" stroke-dasharray="5 8"/>
-          <!-- centre gem -->
-          <circle cx="39" cy="39" r="6" fill="#C9924A" stroke="#E8C870" stroke-width="1.5"/>
-          <circle cx="37" cy="37" r="2" fill="rgba(255,255,255,0.3)"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="78" height="78" viewBox="0 0 78 78" xmlns="http://www.w3.org/2000/svg"><g stroke="#543322" stroke-width="1.2" stroke-linejoin="round"><path d="M8 33 Q39 16 70 33 L67 52 Q39 38 11 52Z" fill="#513425"/><path d="M8 33 Q39 43 70 33 L67 52 Q39 63 11 52Z" fill="#cfa671"/><path d="M10 37 Q39 47 69 37 M11 49 Q39 59 67 49" fill="none" stroke="#f7e7c8" stroke-width="2"/><path d="M17 40 L23 47 L29 42 L35 50 L41 44 L47 50 L53 42 L59 47 L65 40" fill="none" stroke="#57372a" stroke-width="2.5"/><path d="M59 31 Q66 18 62 8 Q56 16 57 30" fill="#f4e5c9"/><path d="M62 10 L59 29" stroke="#9c744c"/><path d="M11 33 Q39 21 58 29" fill="none" stroke="#b88a62" stroke-width="4" stroke-dasharray="1 3"/></g></svg>
       </div>
 
       <!-- ═══ COW 1 — families bottom left — dark brown/white ═══ -->
       <div class="zd zd-l zd-bot" aria-hidden="true">
-        <svg width="110" height="88" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg">
-          <!-- body -->
-          <rect x="18" y="28" width="68" height="34" rx="10" fill="#5C2E0A" stroke="#3A1808" stroke-width="1.2"/>
-          <!-- white patch on body -->
-          <ellipse cx="48" cy="38" rx="14" ry="10" fill="#F5EDD6" opacity="0.7"/>
-          <!-- neck -->
-          <rect x="14" y="32" width="14" height="18" rx="5" fill="#5C2E0A" stroke="#3A1808" stroke-width="1"/>
-          <!-- HEAD — round, positioned forward (left) -->
-          <ellipse cx="12" cy="38" rx="13" ry="11" fill="#7A3B1E" stroke="#3A1808" stroke-width="1.2"/>
-          <!-- SNOUT — forward-facing rectangle on the left/front of head -->
-          <rect x="0" y="36" width="14" height="9" rx="4" fill="#A0644A" stroke="#3A1808" stroke-width="1"/>
-          <!-- nostrils on snout face -->
-          <circle cx="4"  cy="40" r="1.8" fill="#2C1810"/>
-          <circle cx="10" cy="40" r="1.8" fill="#2C1810"/>
-          <!-- eye -->
-          <circle cx="17" cy="34" r="2.5" fill="#1C0A04"/>
-          <circle cx="16" cy="33" r="0.9" fill="rgba(255,255,255,0.6)"/>
-          <!-- ear -->
-          <ellipse cx="22" cy="28" rx="5" ry="3.5" fill="#A05A2A" stroke="#3A1808" stroke-width="0.8" transform="rotate(-30,22,28)"/>
-          <!-- HORNS — curving upward from top of head -->
-          <path d="M18 28 C16 20,8 16,6 20" stroke="#C9924A" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <path d="M24 26 C24 18,16 14,14 18" stroke="#C9924A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- udder -->
-          <ellipse cx="58" cy="64" rx="10" ry="5" fill="#D4906A" stroke="#3A1808" stroke-width="0.8"/>
-          <line x1="54" y1="68" x2="53" y2="73" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="58" y1="69" x2="58" y2="74" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="62" y1="68" x2="63" y2="73" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- LEGS — 4 straight rectangular legs -->
-          <rect x="26" y="60" width="9" height="22" rx="3" fill="#4A2410" stroke="#3A1808" stroke-width="1"/>
-          <rect x="40" y="60" width="9" height="22" rx="3" fill="#4A2410" stroke="#3A1808" stroke-width="1"/>
-          <rect x="62" y="60" width="9" height="22" rx="3" fill="#4A2410" stroke="#3A1808" stroke-width="1"/>
-          <rect x="76" y="60" width="9" height="22" rx="3" fill="#4A2410" stroke="#3A1808" stroke-width="1"/>
-          <!-- hooves -->
-          <rect x="26" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <rect x="40" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <rect x="62" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <rect x="76" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <!-- TAIL — thin, curling upward at the end -->
-          <path d="M86 36 C96 30,100 38,96 46 C93 52,96 58,94 62" stroke="#4A2410" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <ellipse cx="93" cy="64" rx="5" ry="3" fill="#3A1808"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="110" height="88" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg"><g stroke="#44291c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 52 L34 78 L29 80 L28 54 M48 55 L46 79 L41 80 L40 55 M77 54 L80 78 L85 80 L85 51 M66 56 L68 78 L73 80 L74 53" fill="#79513a"/><path d="M88 34 Q101 33 98 54 L101 63" fill="none"/><path d="M98 60 Q105 63 101 70 Q95 66 98 60" fill="#44291c"/><path d="M26 31 Q37 22 65 26 Q88 25 91 40 L87 57 Q66 64 43 57 L30 52 L24 44Z" fill="#b88a62"/><path d="M45 27 Q40 37 50 42 Q65 43 59 27 M74 29 Q64 44 76 52 L87 49 L88 37Z" fill="#f4e6cc" stroke="none"/><path d="M32 32 L28 23 L18 24 L14 35 L10 45 Q11 52 21 51 L30 43Z" fill="#79513a"/><path d="M18 25 Q9 22 10 13 Q13 20 20 20 M25 24 Q31 19 28 10 Q25 18 23 20" fill="#e8d5b0"/><path d="M15 30 Q4 24 5 31 Q8 36 15 34 M28 29 Q36 23 35 30 L29 34" fill="#b88a62"/><path d="M10 43 Q17 39 24 43 L22 50 Q12 55 10 48Z" fill="#d0ad8b"/><circle cx="19" cy="34" r="1.8" fill="#24150f" stroke="none"/><path d="M13 46 L14 46 M20 46 L21 46 M29 79 L35 79 M41 79 L47 79 M68 79 L74 79 M80 79 L86 79" stroke="#24150f" stroke-width="3"/><path d="M60 59 Q65 67 71 60" fill="#d0ad8b"/></g></svg>
       </div>
 
       <div class="families-inner">
@@ -734,17 +684,17 @@
         <div class="families-split">
           <div class="family-block">
             <p class="family-surname">Mkhize</p>
-            <p class="family-house">Family</p>
+            <p class="family-house">House of Mkhize</p>
           </div>
           <div class="families-diamond" aria-hidden="true"></div>
           <div class="family-block">
             <p class="family-surname">Sixpence</p>
-            <p class="family-house">Family</p>
+            <p class="family-house">House of Sixpence</p>
           </div>
         </div>
         <p class="families-invite-text">
           joyfully request the honour of your presence<br>
-          at the Lobola celebration of their children
+          at the wedding celebration of their children
         </p>
         <span class="families-names-script">Themba &amp; Lisa</span>
         <p class="families-event-detail">
@@ -759,85 +709,17 @@
 
       <!-- ═══ COLOURED SPEAR — left lean ═══ -->
       <div class="zd zd-l zd-lean-l" aria-hidden="true">
-        <svg width="30" height="144" viewBox="0 0 30 144" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="blade3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7A8E9A"/><stop offset="50%" stop-color="#D4E2EC"/><stop offset="100%" stop-color="#7A8E9A"/></linearGradient></defs>
-          <rect x="12" y="44" width="6" height="100" rx="3" fill="#7A3B1E"/>
-          <line x1="13" y1="62"  x2="17" y2="74"  stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <line x1="13" y1="94"  x2="17" y2="106" stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <path d="M15 2 C15 2,3 12,2 26 C1 37,7 43,15 45 C23 43,29 37,28 26 C27 12,15 2,15 2Z" fill="url(#blade3)" stroke="#7799BB" stroke-width="1"/>
-          <line x1="15" y1="4" x2="15" y2="43" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
-          <rect x="10" y="42" width="10" height="5" rx="1" fill="#CC4400"/>
-          <rect x="10" y="47" width="10" height="4" rx="0" fill="#C9924A"/>
-          <rect x="10" y="51" width="10" height="3" rx="0" fill="#1C0A04"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="30" height="144" viewBox="0 0 30 144" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8823529411764706 0.8228571428571428)"><g stroke-linecap="round" stroke-linejoin="round"><path d="M17 49 L17 168" stroke="#432719" stroke-width="6"/><path d="M16 67 L16 165" stroke="#b78551" stroke-width="1.4"/><path d="M17 4 Q8 21 5 34 Q5 45 17 53 Q29 45 29 34 Q26 21 17 4Z" fill="#c5c8bd" stroke="#594a39" stroke-width="1.3"/><path d="M17 5 L17 51 L7 34Z" fill="#eeeadc"/><path d="M17 8 L17 49" stroke="#766b58"/><path d="M12 53 L22 53 L22 65 L12 65Z" fill="#513020"/><path d="M12 55 L22 57 M12 59 L22 61 M12 63 L22 65" stroke="#d6ab6c" stroke-width="1.6"/></g></g></svg>
       </div>
 
       <!-- ═══ COLOURED UMQHELE — right ═══ -->
       <div class="zd zd-r zd-mid" aria-hidden="true">
-        <svg width="76" height="76" viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="uRing2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#8B1A1A"/><stop offset="50%" stop-color="#CC2200"/><stop offset="100%" stop-color="#6B1010"/></linearGradient></defs>
-          <circle cx="38" cy="38" r="34" fill="none" stroke="url(#uRing2)" stroke-width="7"/>
-          <circle cx="38" cy="38" r="25" fill="none" stroke="#CC2200" stroke-width="2"/>
-          <circle cx="38" cy="38" r="17" fill="none" stroke="#E2B87A" stroke-width="0.8" stroke-dasharray="3 5"/>
-          <line x1="38" y1="4"  x2="38" y2="13" stroke="#6B1010" stroke-width="2"/>
-          <line x1="38" y1="63" x2="38" y2="72" stroke="#6B1010" stroke-width="2"/>
-          <line x1="4"  y1="38" x2="13" y2="38" stroke="#6B1010" stroke-width="2"/>
-          <line x1="63" y1="38" x2="72" y2="38" stroke="#6B1010" stroke-width="2"/>
-          <line x1="11" y1="11" x2="18" y2="18" stroke="#6B1010" stroke-width="1.5"/>
-          <line x1="58" y1="58" x2="65" y2="65" stroke="#6B1010" stroke-width="1.5"/>
-          <line x1="65" y1="11" x2="58" y2="18" stroke="#6B1010" stroke-width="1.5"/>
-          <line x1="11" y1="65" x2="18" y2="58" stroke="#6B1010" stroke-width="1.5"/>
-          <circle cx="38" cy="38" r="30" fill="none" stroke="rgba(180,30,10,0.3)" stroke-width="3" stroke-dasharray="5 8"/>
-          <circle cx="38" cy="38" r="6" fill="#CC2200" stroke="#E2B87A" stroke-width="1.5"/>
-          <circle cx="36" cy="36" r="2" fill="rgba(255,200,180,0.4)"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="76" height="76" viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.9743589743589743 0.9743589743589743)"><g stroke="#543322" stroke-width="1.2" stroke-linejoin="round"><path d="M8 33 Q39 16 70 33 L67 52 Q39 38 11 52Z" fill="#513425"/><path d="M8 33 Q39 43 70 33 L67 52 Q39 63 11 52Z" fill="#cfa671"/><path d="M10 37 Q39 47 69 37 M11 49 Q39 59 67 49" fill="none" stroke="#f7e7c8" stroke-width="2"/><path d="M17 40 L23 47 L29 42 L35 50 L41 44 L47 50 L53 42 L59 47 L65 40" fill="none" stroke="#57372a" stroke-width="2.5"/><path d="M59 31 Q66 18 62 8 Q56 16 57 30" fill="#f4e5c9"/><path d="M62 10 L59 29" stroke="#9c744c"/><path d="M11 33 Q39 21 58 29" fill="none" stroke="#b88a62" stroke-width="4" stroke-dasharray="1 3"/></g></g></svg>
       </div>
 
       <!-- ═══ COW 2 — story right — golden tan, facing left ═══ -->
       <div class="zd zd-r zd-lean-r" style="right: clamp(4px,2vw,28px);" aria-hidden="true">
-        <svg width="110" height="88" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg">
-          <!-- mirrored cow (facing right-to-left via scaleX flip) -->
-          <g transform="translate(110,0) scale(-1,1)">
-            <!-- body -->
-            <rect x="18" y="28" width="68" height="34" rx="10" fill="#C49A5A" stroke="#7A4A1E" stroke-width="1.2"/>
-            <!-- brown patch -->
-            <ellipse cx="55" cy="42" rx="16" ry="11" fill="#7A4A18" opacity="0.6"/>
-            <!-- neck -->
-            <rect x="14" y="32" width="14" height="18" rx="5" fill="#C49A5A" stroke="#7A4A1E" stroke-width="1"/>
-            <!-- head -->
-            <ellipse cx="12" cy="38" rx="13" ry="11" fill="#D4A870" stroke="#7A4A1E" stroke-width="1.2"/>
-            <!-- snout forward -->
-            <rect x="0" y="36" width="14" height="9" rx="4" fill="#B8845A" stroke="#7A4A1E" stroke-width="1"/>
-            <circle cx="4"  cy="40" r="1.8" fill="#3A1808"/>
-            <circle cx="10" cy="40" r="1.8" fill="#3A1808"/>
-            <!-- eye -->
-            <circle cx="17" cy="34" r="2.5" fill="#1C0A04"/>
-            <circle cx="16" cy="33" r="0.9" fill="rgba(255,255,255,0.6)"/>
-            <!-- ear -->
-            <ellipse cx="22" cy="28" rx="5" ry="3.5" fill="#B8845A" stroke="#7A4A1E" stroke-width="0.8" transform="rotate(-30,22,28)"/>
-            <!-- horns -->
-            <path d="M18 28 C16 20,8 16,6 20" stroke="#E2B87A" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path d="M24 26 C24 18,16 14,14 18" stroke="#E2B87A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <!-- udder -->
-            <ellipse cx="58" cy="64" rx="10" ry="5" fill="#D4906A" stroke="#7A4A1E" stroke-width="0.8"/>
-            <line x1="54" y1="68" x2="53" y2="73" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="58" y1="69" x2="58" y2="74" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="62" y1="68" x2="63" y2="73" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- legs -->
-            <rect x="26" y="60" width="9" height="22" rx="3" fill="#8B5A28" stroke="#7A4A1E" stroke-width="1"/>
-            <rect x="40" y="60" width="9" height="22" rx="3" fill="#8B5A28" stroke="#7A4A1E" stroke-width="1"/>
-            <rect x="62" y="60" width="9" height="22" rx="3" fill="#8B5A28" stroke="#7A4A1E" stroke-width="1"/>
-            <rect x="76" y="60" width="9" height="22" rx="3" fill="#8B5A28" stroke="#7A4A1E" stroke-width="1"/>
-            <!-- hooves -->
-            <rect x="26" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <rect x="40" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <rect x="62" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <rect x="76" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <!-- tail -->
-            <path d="M86 36 C96 30,100 38,96 46 C93 52,96 58,94 62" stroke="#8B5A28" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <ellipse cx="93" cy="64" rx="5" ry="3" fill="#5C3010"/>
-          </g>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="110" height="88" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg"><g transform="translate(110 0) scale(-1 1)"><g stroke="#44291c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 52 L34 78 L29 80 L28 54 M48 55 L46 79 L41 80 L40 55 M77 54 L80 78 L85 80 L85 51 M66 56 L68 78 L73 80 L74 53" fill="#79513a"/><path d="M88 34 Q101 33 98 54 L101 63" fill="none"/><path d="M98 60 Q105 63 101 70 Q95 66 98 60" fill="#44291c"/><path d="M26 31 Q37 22 65 26 Q88 25 91 40 L87 57 Q66 64 43 57 L30 52 L24 44Z" fill="#b88a62"/><path d="M45 27 Q40 37 50 42 Q65 43 59 27 M74 29 Q64 44 76 52 L87 49 L88 37Z" fill="#f4e6cc" stroke="none"/><path d="M32 32 L28 23 L18 24 L14 35 L10 45 Q11 52 21 51 L30 43Z" fill="#79513a"/><path d="M18 25 Q9 22 10 13 Q13 20 20 20 M25 24 Q31 19 28 10 Q25 18 23 20" fill="#e8d5b0"/><path d="M15 30 Q4 24 5 31 Q8 36 15 34 M28 29 Q36 23 35 30 L29 34" fill="#b88a62"/><path d="M10 43 Q17 39 24 43 L22 50 Q12 55 10 48Z" fill="#d0ad8b"/><circle cx="19" cy="34" r="1.8" fill="#24150f" stroke="none"/><path d="M13 46 L14 46 M20 46 L21 46 M29 79 L35 79 M41 79 L47 79 M68 79 L74 79 M80 79 L86 79" stroke="#24150f" stroke-width="3"/><path d="M60 59 Q65 67 71 60" fill="#d0ad8b"/></g></g></svg>
       </div>
 
       <div class="story-inner">
@@ -857,32 +739,12 @@
 
       <!-- ═══ SHIELD — LEFT (softer on dark bg) ═══ -->
       <div class="zd zd-l zd-mid" style="opacity:0.6;" aria-hidden="true">
-        <svg width="70" height="128" viewBox="0 0 70 128" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="shRed3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3E1808"/><stop offset="50%" stop-color="#7A3B18"/><stop offset="100%" stop-color="#3E1808"/></linearGradient></defs>
-          <path d="M35 3 C50 8,67 26,68 50 C69 74,58 96,48 110 C43 118,38 124,35 126 C32 124,27 118,22 110 C12 96,1 74,2 50 C3 26,20 8,35 3Z" fill="#1C0A04" stroke="#C9924A" stroke-width="1.4"/>
-          <path d="M35 11 C47 15,59 29,61 48 L35 48 L9 48 C11 29,23 15,35 11Z" fill="url(#shRed3)"/>
-          <rect x="9" y="48" width="52" height="20" fill="#F7EDD6" rx="1"/>
-          <path d="M35 68 L61 68 C59 87,51 101,43 112 C40 118,37 122,35 124 C33 122,30 118,27 112 C19 101,11 87,9 68Z" fill="url(#shRed3)"/>
-          <polygon points="9,48 20,58 9,68" fill="#1C0A04"/>
-          <polygon points="61,48 50,58 61,68" fill="#1C0A04"/>
-          <line x1="35" y1="3" x2="35" y2="124" stroke="#C9924A" stroke-width="2" stroke-linecap="round"/>
-          <rect x="31" y="59" width="8" height="12" rx="2" fill="#1C0A04" stroke="#C9924A" stroke-width="0.9"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="70" height="128" viewBox="0 0 70 128" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.875 0.8533333333333334)"><path d="M40 5 Q73 24 73 70 Q72 113 40 145 Q8 113 7 70 Q7 24 40 5Z" fill="#493025" stroke="#c9924a" stroke-width="1.7"/><path d="M40 12 Q16 29 14 66 Q13 110 40 136 Q65 107 66 65 Q63 31 40 12Z" fill="#d7c2a2"/><path d="M21 31 Q28 22 38 16 L33 48 L16 60 M49 29 L62 43 L64 68 L48 58Z M16 86 L34 78 L30 118 L22 105Z M49 87 L63 79 L57 109 L43 132Z" fill="#493025"/><path d="M40 7 L40 143" stroke="#a77340" stroke-width="3"/><g stroke="#f9efd9" stroke-width="3" stroke-linecap="round"><path d="M32 47 L48 47"/><path d="M32 55 L48 55"/><path d="M32 63 L48 63"/><path d="M32 71 L48 71"/><path d="M32 79 L48 79"/><path d="M32 87 L48 87"/><path d="M32 95 L48 95"/></g><path d="M40 15 L40 135" stroke="#392319" stroke-width="1"/></g></svg>
       </div>
 
       <!-- ═══ SPEAR — RIGHT (softer) ═══ -->
       <div class="zd zd-r zd-lean-r" style="opacity:0.6;" aria-hidden="true">
-        <svg width="30" height="144" viewBox="0 0 30 144" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="blade4" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7A8E9A"/><stop offset="50%" stop-color="#D4E2EC"/><stop offset="100%" stop-color="#7A8E9A"/></linearGradient></defs>
-          <rect x="12" y="44" width="6" height="100" rx="3" fill="#8B4A1A"/>
-          <line x1="13" y1="62"  x2="17" y2="74"  stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <line x1="13" y1="94"  x2="17" y2="106" stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <path d="M15 2 C15 2,3 12,2 26 C1 37,7 43,15 45 C23 43,29 37,28 26 C27 12,15 2,15 2Z" fill="url(#blade4)" stroke="#7799BB" stroke-width="1"/>
-          <line x1="15" y1="4" x2="15" y2="43" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
-          <rect x="10" y="42" width="10" height="5" rx="1" fill="#CC2200"/>
-          <rect x="10" y="47" width="10" height="4" rx="0" fill="#C9924A"/>
-          <rect x="10" y="51" width="10" height="3" rx="0" fill="#1C0A04"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="30" height="144" viewBox="0 0 30 144" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8823529411764706 0.8228571428571428)"><g stroke-linecap="round" stroke-linejoin="round"><path d="M17 49 L17 168" stroke="#432719" stroke-width="6"/><path d="M16 67 L16 165" stroke="#b78551" stroke-width="1.4"/><path d="M17 4 Q8 21 5 34 Q5 45 17 53 Q29 45 29 34 Q26 21 17 4Z" fill="#c5c8bd" stroke="#594a39" stroke-width="1.3"/><path d="M17 5 L17 51 L7 34Z" fill="#eeeadc"/><path d="M17 8 L17 49" stroke="#766b58"/><path d="M12 53 L22 53 L22 65 L12 65Z" fill="#513020"/><path d="M12 55 L22 57 M12 59 L22 61 M12 63 L22 65" stroke="#d6ab6c" stroke-width="1.6"/></g></g></svg>
       </div>
 
       <div class="venue-inner">
@@ -913,16 +775,9 @@
     <!-- ── PROGRAMME ── -->
     <section class="prog-section" aria-label="Programme of events">
 
-      <!-- ═══ CROSSED SPEARS right sides onyl═══ -->
-          <div class="zd zd-r zd-cross-r" aria-hidden="true">
-        <svg width="28" height="126" viewBox="0 0 28 126" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="blade6" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7A8E9A"/><stop offset="50%" stop-color="#DCE8F0"/><stop offset="100%" stop-color="#7A8E9A"/></linearGradient></defs>
-          <rect x="11" y="42" width="6" height="84" rx="3" fill="#8B4A1A"/>
-          <path d="M14 2 C14 2,3 11,2 24 C1 34,7 41,14 43 C21 41,27 34,26 24 C25 11,14 2,14 2Z" fill="url(#blade6)" stroke="#7799BB" stroke-width="1"/>
-          <line x1="14" y1="4" x2="14" y2="41" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
-          <rect x="9" y="40" width="10" height="5" rx="1" fill="#CC2200"/>
-          <rect x="9" y="45" width="10" height="4" rx="0" fill="#C9924A"/>
-        </svg>
+      <!-- ═══ SPEAR — RIGHT ═══ -->
+      <div class="zd zd-r zd-cross-r" aria-hidden="true">
+        <svg focusable="false" aria-hidden="true" width="28" height="126" viewBox="0 0 28 126" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8235294117647058 0.72)"><g stroke-linecap="round" stroke-linejoin="round"><path d="M17 49 L17 168" stroke="#432719" stroke-width="6"/><path d="M16 67 L16 165" stroke="#b78551" stroke-width="1.4"/><path d="M17 4 Q8 21 5 34 Q5 45 17 53 Q29 45 29 34 Q26 21 17 4Z" fill="#c5c8bd" stroke="#594a39" stroke-width="1.3"/><path d="M17 5 L17 51 L7 34Z" fill="#eeeadc"/><path d="M17 8 L17 49" stroke="#766b58"/><path d="M12 53 L22 53 L22 65 L12 65Z" fill="#513020"/><path d="M12 55 L22 57 M12 59 L22 61 M12 63 L22 65" stroke="#d6ab6c" stroke-width="1.6"/></g></g></svg>
       </div>
 
       <div class="prog-inner">
@@ -939,55 +794,9 @@
     <!-- ── DRESS CODE ── -->
     <section class="dress-section" aria-label="Dress code">
 
-      <!-- ═══ SHIELD — LEFT ═══ -->
-     
-
-      <!-- ═══ UMQHELE — RIGHT ═══ -->
-   
-
       <!-- ═══ COW 3 — dress code bottom left — sandy cream ═══ -->
       <div class="zd zd-l zd-bot" style="opacity:0.65;" aria-hidden="true">
-        <svg width="110" height="88" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg">
-          <!-- body -->
-          <rect x="18" y="28" width="68" height="34" rx="10" fill="#D4A870" stroke="#7A4A1E" stroke-width="1.2"/>
-          <!-- dark brown patch -->
-          <ellipse cx="42" cy="36" rx="13" ry="9" fill="#5C2E0A" opacity="0.55"/>
-          <ellipse cx="72" cy="48" rx="10" ry="7" fill="#5C2E0A" opacity="0.45"/>
-          <!-- neck -->
-          <rect x="14" y="32" width="14" height="18" rx="5" fill="#D4A870" stroke="#7A4A1E" stroke-width="1"/>
-          <!-- head -->
-          <ellipse cx="12" cy="38" rx="13" ry="11" fill="#C49A6C" stroke="#7A4A1E" stroke-width="1.2"/>
-          <!-- snout — forward rectangle -->
-          <rect x="0" y="36" width="14" height="9" rx="4" fill="#B8845A" stroke="#7A4A1E" stroke-width="1"/>
-          <circle cx="4"  cy="40" r="1.8" fill="#2C1810"/>
-          <circle cx="10" cy="40" r="1.8" fill="#2C1810"/>
-          <!-- eye -->
-          <circle cx="17" cy="34" r="2.5" fill="#1C0A04"/>
-          <circle cx="16" cy="33" r="0.9" fill="rgba(255,255,255,0.6)"/>
-          <!-- ear -->
-          <ellipse cx="22" cy="28" rx="5" ry="3.5" fill="#B8845A" stroke="#7A4A1E" stroke-width="0.8" transform="rotate(-30,22,28)"/>
-          <!-- horns -->
-          <path d="M18 28 C16 20,8 16,6 20" stroke="#C9924A" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <path d="M24 26 C24 18,16 14,14 18" stroke="#C9924A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- udder -->
-          <ellipse cx="58" cy="64" rx="10" ry="5" fill="#E0A880" stroke="#7A4A1E" stroke-width="0.8"/>
-          <line x1="54" y1="68" x2="53" y2="73" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="58" y1="69" x2="58" y2="74" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="62" y1="68" x2="63" y2="73" stroke="#C07858" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- legs -->
-          <rect x="26" y="60" width="9" height="22" rx="3" fill="#A07840" stroke="#7A4A1E" stroke-width="1"/>
-          <rect x="40" y="60" width="9" height="22" rx="3" fill="#A07840" stroke="#7A4A1E" stroke-width="1"/>
-          <rect x="62" y="60" width="9" height="22" rx="3" fill="#A07840" stroke="#7A4A1E" stroke-width="1"/>
-          <rect x="76" y="60" width="9" height="22" rx="3" fill="#A07840" stroke="#7A4A1E" stroke-width="1"/>
-          <!-- hooves -->
-          <rect x="26" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <rect x="40" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <rect x="62" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <rect x="76" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-          <!-- tail -->
-          <path d="M86 36 C96 30,100 38,96 46 C93 52,96 58,94 62" stroke="#A07840" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <ellipse cx="93" cy="64" rx="5" ry="3" fill="#7A5020"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="110" height="88" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg"><g stroke="#44291c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 52 L34 78 L29 80 L28 54 M48 55 L46 79 L41 80 L40 55 M77 54 L80 78 L85 80 L85 51 M66 56 L68 78 L73 80 L74 53" fill="#79513a"/><path d="M88 34 Q101 33 98 54 L101 63" fill="none"/><path d="M98 60 Q105 63 101 70 Q95 66 98 60" fill="#44291c"/><path d="M26 31 Q37 22 65 26 Q88 25 91 40 L87 57 Q66 64 43 57 L30 52 L24 44Z" fill="#b88a62"/><path d="M45 27 Q40 37 50 42 Q65 43 59 27 M74 29 Q64 44 76 52 L87 49 L88 37Z" fill="#f4e6cc" stroke="none"/><path d="M32 32 L28 23 L18 24 L14 35 L10 45 Q11 52 21 51 L30 43Z" fill="#79513a"/><path d="M18 25 Q9 22 10 13 Q13 20 20 20 M25 24 Q31 19 28 10 Q25 18 23 20" fill="#e8d5b0"/><path d="M15 30 Q4 24 5 31 Q8 36 15 34 M28 29 Q36 23 35 30 L29 34" fill="#b88a62"/><path d="M10 43 Q17 39 24 43 L22 50 Q12 55 10 48Z" fill="#d0ad8b"/><circle cx="19" cy="34" r="1.8" fill="#24150f" stroke="none"/><path d="M13 46 L14 46 M20 46 L21 46 M29 79 L35 79 M41 79 L47 79 M68 79 L74 79 M80 79 L86 79" stroke="#24150f" stroke-width="3"/><path d="M60 59 Q65 67 71 60" fill="#d0ad8b"/></g></svg>
       </div>
 
       <p class="dress-eyebrow">  Dress Code </p>
@@ -1007,76 +816,17 @@
 
       <!-- ═══ SPEAR — LEFT ═══ -->
       <div class="zd zd-l zd-mid" style="opacity:0.45;" aria-hidden="true">
-        <svg width="28" height="136" viewBox="0 0 28 136" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="blade7" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#7A8E9A"/><stop offset="50%" stop-color="#DCE8F0"/><stop offset="100%" stop-color="#7A8E9A"/></linearGradient></defs>
-          <rect x="11" y="42" width="6" height="94" rx="3" fill="#7A3B1E"/>
-          <line x1="12" y1="60"  x2="16" y2="72"  stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <line x1="12" y1="92"  x2="16" y2="104" stroke="rgba(44,24,16,0.28)" stroke-width="0.8"/>
-          <path d="M14 2 C14 2,3 11,2 24 C1 34,7 41,14 43 C21 41,27 34,26 24 C25 11,14 2,14 2Z" fill="url(#blade7)" stroke="#7799BB" stroke-width="1"/>
-          <line x1="14" y1="4" x2="14" y2="41" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
-          <rect x="9" y="40" width="10" height="5" rx="1" fill="#8B1A1A"/>
-          <rect x="9" y="45" width="10" height="4" rx="0" fill="#C9924A"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="28" height="136" viewBox="0 0 28 136" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.8235294117647058 0.7771428571428571)"><g stroke-linecap="round" stroke-linejoin="round"><path d="M17 49 L17 168" stroke="#432719" stroke-width="6"/><path d="M16 67 L16 165" stroke="#b78551" stroke-width="1.4"/><path d="M17 4 Q8 21 5 34 Q5 45 17 53 Q29 45 29 34 Q26 21 17 4Z" fill="#c5c8bd" stroke="#594a39" stroke-width="1.3"/><path d="M17 5 L17 51 L7 34Z" fill="#eeeadc"/><path d="M17 8 L17 49" stroke="#766b58"/><path d="M12 53 L22 53 L22 65 L12 65Z" fill="#513020"/><path d="M12 55 L22 57 M12 59 L22 61 M12 63 L22 65" stroke="#d6ab6c" stroke-width="1.6"/></g></g></svg>
       </div>
 
       <!-- ═══ COW 5 — RSVP bottom right — cognac, facing left ═══ -->
       <div class="zd zd-r" style="bottom:4%;opacity:0.55;" aria-hidden="true">
-        <svg width="95" height="76" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg">
-          <g transform="translate(110,0) scale(-1,1)">
-            <!-- body -->
-            <rect x="18" y="28" width="68" height="34" rx="10" fill="#8B4A1E" stroke="#5C2E0A" stroke-width="1.2"/>
-            <!-- cream patch -->
-            <ellipse cx="46" cy="38" rx="14" ry="9" fill="#E8D5A0" opacity="0.6"/>
-            <!-- neck -->
-            <rect x="14" y="32" width="14" height="18" rx="5" fill="#8B4A1E" stroke="#5C2E0A" stroke-width="1"/>
-            <!-- head -->
-            <ellipse cx="12" cy="38" rx="13" ry="11" fill="#A05A28" stroke="#5C2E0A" stroke-width="1.2"/>
-            <!-- snout -->
-            <rect x="0" y="36" width="14" height="9" rx="4" fill="#C07848" stroke="#5C2E0A" stroke-width="1"/>
-            <circle cx="4"  cy="40" r="1.8" fill="#2C1810"/>
-            <circle cx="10" cy="40" r="1.8" fill="#2C1810"/>
-            <!-- eye -->
-            <circle cx="17" cy="34" r="2.5" fill="#1C0A04"/>
-            <circle cx="16" cy="33" r="0.9" fill="rgba(255,255,255,0.6)"/>
-            <!-- ear -->
-            <ellipse cx="22" cy="28" rx="5" ry="3.5" fill="#C07848" stroke="#5C2E0A" stroke-width="0.8" transform="rotate(-30,22,28)"/>
-            <!-- horns -->
-            <path d="M18 28 C16 20,8 16,6 20" stroke="#E2B87A" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path d="M24 26 C24 18,16 14,14 18" stroke="#E2B87A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <!-- udder -->
-            <ellipse cx="58" cy="64" rx="10" ry="5" fill="#C07848" stroke="#5C2E0A" stroke-width="0.8"/>
-            <line x1="54" y1="68" x2="53" y2="73" stroke="#A05828" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="58" y1="69" x2="58" y2="74" stroke="#A05828" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="62" y1="68" x2="63" y2="73" stroke="#A05828" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- legs -->
-            <rect x="26" y="60" width="9" height="22" rx="3" fill="#6B3818" stroke="#5C2E0A" stroke-width="1"/>
-            <rect x="40" y="60" width="9" height="22" rx="3" fill="#6B3818" stroke="#5C2E0A" stroke-width="1"/>
-            <rect x="62" y="60" width="9" height="22" rx="3" fill="#6B3818" stroke="#5C2E0A" stroke-width="1"/>
-            <rect x="76" y="60" width="9" height="22" rx="3" fill="#6B3818" stroke="#5C2E0A" stroke-width="1"/>
-            <!-- hooves -->
-            <rect x="26" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <rect x="40" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <rect x="62" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <rect x="76" y="79" width="9" height="5" rx="2" fill="#1C0A04"/>
-            <!-- tail -->
-            <path d="M86 36 C96 30,100 38,96 46 C93 52,96 58,94 62" stroke="#6B3818" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <ellipse cx="93" cy="64" rx="5" ry="3" fill="#3A1808"/>
-          </g>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="95" height="76" viewBox="0 0 110 88" xmlns="http://www.w3.org/2000/svg"><g transform="translate(110 0) scale(-1 1)"><g stroke="#44291c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 52 L34 78 L29 80 L28 54 M48 55 L46 79 L41 80 L40 55 M77 54 L80 78 L85 80 L85 51 M66 56 L68 78 L73 80 L74 53" fill="#79513a"/><path d="M88 34 Q101 33 98 54 L101 63" fill="none"/><path d="M98 60 Q105 63 101 70 Q95 66 98 60" fill="#44291c"/><path d="M26 31 Q37 22 65 26 Q88 25 91 40 L87 57 Q66 64 43 57 L30 52 L24 44Z" fill="#b88a62"/><path d="M45 27 Q40 37 50 42 Q65 43 59 27 M74 29 Q64 44 76 52 L87 49 L88 37Z" fill="#f4e6cc" stroke="none"/><path d="M32 32 L28 23 L18 24 L14 35 L10 45 Q11 52 21 51 L30 43Z" fill="#79513a"/><path d="M18 25 Q9 22 10 13 Q13 20 20 20 M25 24 Q31 19 28 10 Q25 18 23 20" fill="#e8d5b0"/><path d="M15 30 Q4 24 5 31 Q8 36 15 34 M28 29 Q36 23 35 30 L29 34" fill="#b88a62"/><path d="M10 43 Q17 39 24 43 L22 50 Q12 55 10 48Z" fill="#d0ad8b"/><circle cx="19" cy="34" r="1.8" fill="#24150f" stroke="none"/><path d="M13 46 L14 46 M20 46 L21 46 M29 79 L35 79 M41 79 L47 79 M68 79 L74 79 M80 79 L86 79" stroke="#24150f" stroke-width="3"/><path d="M60 59 Q65 67 71 60" fill="#d0ad8b"/></g></g></svg>
       </div>
 
       <!-- ═══ SHIELD — RIGHT (flipped) ═══ -->
       <div class="zd zd-r zd-mid-flipx" style="opacity:0.45;" aria-hidden="true">
-        <svg width="62" height="114" viewBox="0 0 62 114" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="shRed5" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4A1E08"/><stop offset="50%" stop-color="#8B4A1E"/><stop offset="100%" stop-color="#4A1E08"/></linearGradient></defs>
-          <path d="M31 3 C44 8,59 24,60 44 C61 64,52 82,44 94 C40 101,35 106,31 108 C28 106,23 101,19 94 C10 82,1 64,2 44 C3 24,18 8,31 3Z" fill="#1C0A04" stroke="#C9924A" stroke-width="1.3"/>
-          <path d="M31 11 C41 15,52 27,54 42 L31 42 L8 42 C10 27,21 15,31 11Z" fill="url(#shRed5)"/>
-          <rect x="8" y="42" width="46" height="18" fill="#F7EDD6" rx="1"/>
-          <path d="M31 60 L54 60 C52 77,45 90,37 99 C34 105,32 108,31 110 C30 108,28 105,25 99 C17 90,10 77,8 60Z" fill="url(#shRed5)"/>
-          <polygon points="8,42 17,51 8,60" fill="#1C0A04"/>
-          <polygon points="54,42 45,51 54,60" fill="#1C0A04"/>
-          <line x1="31" y1="3" x2="31" y2="110" stroke="#C9924A" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
+        <svg focusable="false" aria-hidden="true" width="62" height="114" viewBox="0 0 62 114" xmlns="http://www.w3.org/2000/svg"><g transform="scale(0.775 0.76)"><path d="M40 5 Q73 24 73 70 Q72 113 40 145 Q8 113 7 70 Q7 24 40 5Z" fill="#493025" stroke="#c9924a" stroke-width="1.7"/><path d="M40 12 Q16 29 14 66 Q13 110 40 136 Q65 107 66 65 Q63 31 40 12Z" fill="#d7c2a2"/><path d="M21 31 Q28 22 38 16 L33 48 L16 60 M49 29 L62 43 L64 68 L48 58Z M16 86 L34 78 L30 118 L22 105Z M49 87 L63 79 L57 109 L43 132Z" fill="#493025"/><path d="M40 7 L40 143" stroke="#a77340" stroke-width="3"/><g stroke="#f9efd9" stroke-width="3" stroke-linecap="round"><path d="M32 47 L48 47"/><path d="M32 55 L48 55"/><path d="M32 63 L48 63"/><path d="M32 71 L48 71"/><path d="M32 79 L48 79"/><path d="M32 87 L48 87"/><path d="M32 95 L48 95"/></g><path d="M40 15 L40 135" stroke="#392319" stroke-width="1"/></g></svg>
       </div>
 
       <div class="rsvp-inner">
@@ -1103,35 +853,93 @@
   </div><!-- end #invitation -->
 
   <script>
-    var envelopeEl   = document.getElementById('envelope-screen');
-    var invitationEl = document.getElementById('invitation');
-    var opened = false;
+    (function () {
+      'use strict';
+      var envelope = document.getElementById('envelope-screen');
+      var invitation = document.getElementById('invitation');
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var opened = false;
+      var observer;
+      var motionObserver;
+      document.body.classList.add('invitation-closed');
+      invitation.inert = true;
 
-    function openInvitation() {
-      if (opened) return;
-      opened = true;
-      envelopeEl.classList.add('envelope-screen--opening');
-      setTimeout(function() {
-        envelopeEl.style.display = 'none';
-        invitationEl.style.display = 'block';
-        invitationEl.offsetHeight;
-        invitationEl.classList.add('visible');
-        window.scrollTo(0, 0);
-      }, 950);
-    }
-
-    envelopeEl.addEventListener('click', openInvitation);
-    envelopeEl.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      openInvitation();
-    });
-    envelopeEl.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openInvitation();
+      function setupReveals() {
+        if (reducedMotion.matches || !('IntersectionObserver' in window)) return;
+        var targets = invitation.querySelectorAll('.families-inner, .story-card, .story-quote, .venue-inner, .prog-heading, .prog-item, .dress-eyebrow, .dress-theme, .dress-sub, .dress-swatches, .rsvp-inner');
+        observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove('reveal-pending');
+              entry.target.classList.add('reveal-ready');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: .08, rootMargin: '0px 0px -16px 0px' });
+        targets.forEach(function (target) {
+          target.classList.add('reveal-pending');
+          observer.observe(target);
+        });
       }
-    });
-  </script>
+      function setupDecorativeMotion() {
+        if (reducedMotion.matches || !('IntersectionObserver' in window)) return;
+        motionObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            entry.target.classList.toggle('motion-active', entry.isIntersecting);
+          });
+        }, { threshold: 0 });
+        invitation.querySelectorAll('section').forEach(function (section) {
+          section.classList.add('motion-enabled');
+          motionObserver.observe(section);
+        });
+      }
+      function openInvitation() {
+        if (opened) return;
+        opened = true;
+        invitation.style.display = 'block';
+        invitation.inert = false;
+        setupReveals();
+        setupDecorativeMotion();
+        window.scrollTo(0, 0);
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () { invitation.classList.add('visible'); });
+        });
+        envelope.classList.add('envelope-screen--opening');
+        var finished = false;
+        function finish() {
+          if (finished) return;
+          finished = true;
+          envelope.style.display = 'none';
+          envelope.setAttribute('aria-hidden', 'true');
+          envelope.removeAttribute('tabindex');
+          document.body.classList.remove('invitation-closed');
+          invitation.setAttribute('tabindex', '-1');
+          invitation.focus({ preventScroll: true });
+        }
+        envelope.addEventListener('animationend', function (event) {
+          if (event.target === envelope && event.animationName === 'invitationUnseal') finish();
+        });
+        window.setTimeout(finish, reducedMotion.matches ? 0 : 900);
+      }
+      envelope.addEventListener('click', openInvitation);
+      envelope.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openInvitation();
+        }
+      });
+      document.addEventListener('visibilitychange', function () {
+        document.body.classList.toggle('page-paused', document.hidden);
+      });
+      if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', function (event) {
+        if (event.matches && motionObserver) motionObserver.disconnect();
+        if (event.matches && observer) {
+          observer.disconnect();
+          invitation.querySelectorAll('.reveal-pending').forEach(function (target) { target.classList.remove('reveal-pending'); });
+        }
+      });
+    }());
+</script>
 
 </body>
 </html>
